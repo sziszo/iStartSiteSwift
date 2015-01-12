@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Archive" representedClassName="Archive" syncable="YES">
+        <attribute name="archivedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="archiveId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="archiveStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="archiveGroup" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ArchiveGroup" inverseName="archive" inverseEntity="ArchiveGroup" syncable="YES"/>
+        <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Company" inverseName="archivingMessages" inverseEntity="Company" syncable="YES"/>
+        <relationship name="creator" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="createdArchivingMessages" inverseEntity="User" syncable="YES"/>
+        <relationship name="employee" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Employee" inverseName="archivingMessages" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="message" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="MailboxMessage" inverseName="archiveInfo" inverseEntity="MailboxMessage" syncable="YES"/>
+        <relationship name="project" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Project" inverseName="archivingMessages" inverseEntity="Project" syncable="YES"/>
+    </entity>
+    <entity name="ArchiveGroup" representedClassName="ArchiveGroup" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="archive" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Archive" inverseName="archiveGroup" inverseEntity="Archive" syncable="YES"/>
+        <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Company" inverseName="archiveGroups" inverseEntity="Company" syncable="YES"/>
+        <relationship name="project" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Project" inverseName="archiveGroups" inverseEntity="Project" syncable="YES"/>
+    </entity>
+    <entity name="Company" representedClassName="Company" syncable="YES">
+        <attribute name="companyId" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="history" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="modified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name4" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="archiveGroups" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ArchiveGroup" inverseName="company" inverseEntity="ArchiveGroup" syncable="YES"/>
+        <relationship name="archivingMessages" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Archive" inverseName="company" inverseEntity="Archive" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Contact" inverseName="company" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="creator" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="createdCompanies" inverseEntity="User" syncable="YES"/>
+        <relationship name="employes" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Employee" inverseName="company" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="modifier" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="modifiedCompanies" inverseEntity="User" syncable="YES"/>
+        <relationship name="projects" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Project" inverseName="customer" inverseEntity="Project" syncable="YES"/>
+    </entity>
+    <entity name="Contact" representedClassName="Contact" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Company" inverseName="contacts" inverseEntity="Company" syncable="YES"/>
+        <relationship name="emails" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ContactEmail" inverseName="contact" inverseEntity="ContactEmail" syncable="YES"/>
+        <relationship name="employee" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Employee" inverseName="contacts" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="mailboxContact" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="MailboxContact" inverseName="contact" inverseEntity="MailboxContact" syncable="YES"/>
+        <relationship name="person" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Person" inverseName="contacts" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="ContactEmail" representedClassName="ContactEmail" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Contact" inverseName="emails" inverseEntity="Contact" syncable="YES"/>
+    </entity>
+    <entity name="Employee" representedClassName="Employee" syncable="YES">
+        <attribute name="employeeId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="archivingMessages" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Archive" inverseName="employee" inverseEntity="Archive" syncable="YES"/>
+        <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Company" inverseName="employes" inverseEntity="Company" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Contact" inverseName="employee" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="person" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Person" inverseName="employes" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="Mailbox" representedClassName="Mailbox" syncable="YES">
+        <attribute name="accountName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastSyncDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="loginName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="port" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="server" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sslAuth" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="folders" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="MailboxFolder" inverseName="mailbox" inverseEntity="MailboxFolder" syncable="YES"/>
+    </entity>
+    <entity name="MailboxContact" representedClassName="MailboxContact" syncable="YES">
+        <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="emailAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Contact" inverseName="mailboxContact" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="receivedMessages" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="MailboxMessage" inverseName="receivers" inverseEntity="MailboxMessage" syncable="YES"/>
+        <relationship name="sentMessages" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="MailboxMessage" inverseName="senders" inverseEntity="MailboxMessage" syncable="YES"/>
+    </entity>
+    <entity name="MailboxFolder" representedClassName="MailboxFolder" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="mailbox" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Mailbox" inverseName="folders" inverseEntity="Mailbox" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="MailboxMessage" inverseName="folder" inverseEntity="MailboxMessage" syncable="YES"/>
+    </entity>
+    <entity name="MailboxMessage" representedClassName="MailboxMessage" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <relationship name="archiveInfo" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Archive" inverseName="message" inverseEntity="Archive" syncable="YES"/>
+        <relationship name="folder" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="MailboxFolder" inverseName="messages" inverseEntity="MailboxFolder" syncable="YES"/>
+        <relationship name="receivers" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="MailboxContact" inverseName="receivedMessages" inverseEntity="MailboxContact" syncable="YES"/>
+        <relationship name="senders" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="MailboxContact" inverseName="sentMessages" inverseEntity="MailboxContact" syncable="YES"/>
+    </entity>
+    <entity name="Person" representedClassName="Person" syncable="YES">
+        <attribute name="name1" optional="YES" attributeType="String" indexed="YES" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="name1"/>
+            </userInfo>
+        </attribute>
+        <attribute name="name2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="personId" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Contact" inverseName="person" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="employes" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Employee" inverseName="person" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="person" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Project" representedClassName="Project" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="designation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="history" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="modified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectNr" optional="YES" attributeType="Decimal" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="projectType" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="projectYear" optional="YES" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <relationship name="archiveGroups" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ArchiveGroup" inverseName="project" inverseEntity="ArchiveGroup" syncable="YES"/>
+        <relationship name="archivingMessages" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Archive" inverseName="project" inverseEntity="Archive" syncable="YES"/>
+        <relationship name="creator" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="createdProjects" inverseEntity="User" syncable="YES"/>
+        <relationship name="customer" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Company" inverseName="projects" inverseEntity="Company" syncable="YES"/>
+        <relationship name="modifier" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="modifiedProjects" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="userName" attributeType="String" indexed="YES" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="userName"/>
+            </userInfo>
+        </attribute>
+        <relationship name="createdArchivingMessages" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Archive" inverseName="creator" inverseEntity="Archive" syncable="YES"/>
+        <relationship name="createdCompanies" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Company" inverseName="creator" inverseEntity="Company" syncable="YES"/>
+        <relationship name="createdProjects" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Project" inverseName="creator" inverseEntity="Project" syncable="YES"/>
+        <relationship name="modifiedCompanies" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Company" inverseName="modifier" inverseEntity="Company" syncable="YES"/>
+        <relationship name="modifiedProjects" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Project" inverseName="modifier" inverseEntity="Project" syncable="YES"/>
+        <relationship name="person" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Person" inverseName="user" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Person" positionX="2014" positionY="1136" width="128" height="133"/>
+        <element name="MailboxFolder" positionX="1663" positionY="162" width="128" height="88"/>
+        <element name="Contact" positionX="1584" positionY="819" width="128" height="133"/>
+        <element name="User" positionX="1609" positionY="1157" width="128" height="148"/>
+        <element name="Archive" positionX="1809" positionY="324" width="128" height="178"/>
+        <element name="Mailbox" positionX="1881" positionY="135" width="128" height="163"/>
+        <element name="ContactEmail" positionX="1575" positionY="1017" width="128" height="73"/>
+        <element name="Project" positionX="1800" positionY="576" width="128" height="238"/>
+        <element name="MailboxMessage" positionX="1557" positionY="324" width="128" height="163"/>
+        <element name="Company" positionX="2070" positionY="585" width="128" height="283"/>
+        <element name="ArchiveGroup" positionX="2059" positionY="356" width="128" height="103"/>
+        <element name="MailboxContact" positionX="1564" positionY="594" width="128" height="118"/>
+        <element name="Employee" positionX="2095" positionY="945" width="128" height="118"/>
+    </elements>
+</model>

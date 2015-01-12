@@ -8,7 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+
+@objc
+protocol SMCenterViewControllerDelegate {
+    optional func toggleLeftPanel()
+    optional func toggleRightPanel()
+    optional func collapseSidePanels()
+}
+
+
+class SMViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
