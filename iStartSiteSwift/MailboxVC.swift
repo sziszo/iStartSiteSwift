@@ -92,18 +92,13 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             self.archives.removeAtIndex(indexPath!.row)
             tableView.removeCell(cell, duration: 0.3, completion: nil)
 
-            
-
         }
         
         fetchArchives()
         
         
-        let refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh")
-        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
-        
-        self.refreshControl = refreshControl
+        //setup refreshcontrol
+        initRefreshControl()
     }
     
     
@@ -146,6 +141,18 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    // MARK: refreshControl 
+    
+    func initRefreshControl() {
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh!")
+        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        self.refreshControl = refreshControl
+
+    }
+    
     func refresh(sender:AnyObject) {
         
         let mailboxManager = MailboxManager(account: AppDelegate.sharedAppDelegate().getTestAccount())
@@ -156,7 +163,11 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
 
         Timer.start(3, repeats: false) {
             self.tableView.reloadData()
+            
             self.refreshControl?.endRefreshing()
+            
+            let lastUpdated = NSDate().dateStringWithFormat("MMM d, h:mm:ss")
+            self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refersh! Last updated on \(lastUpdated)")
             println("end refreshing")
         }
     }
