@@ -16,6 +16,22 @@ enum ArchiveStatus: Int  {
     case Rejected = 2
 }
 
+class MessageCell: SBGestureTableViewCell {
+    @IBOutlet weak var senderLabel: UILabel?
+    @IBOutlet weak var subjectLabel: UILabel?
+    @IBOutlet weak var contentLabel: UILabel?
+    @IBOutlet weak var senderDateLabel: UILabel?
+}
+
+class ArchivedCell: SBGestureTableViewCell {
+    @IBOutlet weak var companyLabel: UILabel?
+    @IBOutlet weak var subjectLabel: UILabel?
+    @IBOutlet weak var personLabel: UILabel?
+    @IBOutlet weak var orderNrLabel: UILabel?
+    @IBOutlet weak var archivedAtLabel: UILabel?
+}
+
+
 class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate {
     
     var archives = [Archive]()
@@ -81,6 +97,13 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         }
         
         fetchArchives()
+        
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh")
+        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        self.refreshControl = refreshControl
     }
     
     
@@ -123,6 +146,21 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    func refresh(sender:AnyObject) {
+        
+        let mailboxManager = MailboxManager(account: AppDelegate.sharedAppDelegate().getTestAccount())
+        
+        mailboxManager.fetchMessages() {
+            println("fetching  is finished")
+        }
+
+        Timer.start(3, repeats: false) {
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
+            println("end refreshing")
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -152,7 +190,16 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as SBGestureTableViewCell
+        
+        var cellIdentifier: String
+        switch (currentStatus) {
+        case .Archived:
+            cellIdentifier = "ArchivedCell"
+        default:
+            cellIdentifier = "MessageCell"
+        }
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as SBGestureTableViewCell
         
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
@@ -169,8 +216,54 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
 //        cell.secondRightAction = SBGestureTableViewCellAction(icon: clockIcon.imageWithSize(size), color: brownColor, fraction: 0.6, didTriggerBlock: removeCellBlock)
         
         let archive = archives[indexPath.row]
-        cell.textLabel?.text = "\(archive.archiveStatus)";
+        
+        var cellIdentifier: String
+        switch (currentStatus) {
+        case .Archived:
+            configureArchivedCell(cell, withArchiveItem: archive)
+        default:
+            let message = archive.message
+            configureMessageCell(cell, withMessage: message)
+            
+        }
         
     }
+    
+    func configureMessageCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
+        
+        let messageCell = cell as MessageCell
+        
+//        messageCell.contentLabel?.text = message?.content
+        messageCell.subjectLabel?.text = message?.subject
+        messageCell.senderDateLabel?.text = message?.senderDate.dateStringWithFormat("MMM d")
+        messageCell.senderLabel?.text = "Test@gmail.com"
+    }
+    
+    func configureArchivedCell(cell: SBGestureTableViewCell, withArchiveItem archived: Archive) {
+        
+        func getFormattedCompany() -> String {
+            let company: Company? = archived.company
+            return company != nil ? company!.formattedCompanyName() : "Unknown company"
+        }
+        
+        func getFormattedPerson() -> String {
+            let person: Person? = archived.employee.person
+            return person != nil ? person!.formattedPersonName() : "Unknown person"
+        }
+        
+        func getFormattedOrder() -> String {
+            return "Unknown order"
+        }
+        
+        let archivedCell = cell as ArchivedCell
+        archivedCell.companyLabel?.text = getFormattedCompany()
+        archivedCell.personLabel?.text = getFormattedPerson()
+        archivedCell.orderNrLabel?.text = getFormattedOrder()
+        archivedCell.archivedAtLabel?.text = archived.archivedAt.dateStringWithFormat("MMM d")
+        
+        let message = archived.message;
+        archivedCell.subjectLabel?.text = message.subject;
+    }
+    
     
 }

@@ -19,3 +19,14 @@ class MailboxContact: NSManagedObject {
     @NSManaged var sentMessages: NSSet
 
 }
+
+extension MailboxContact {
+    
+    func addSentMessage(message: MailboxMessage) {
+        self.mutableSetValueForKey("sentMessages").addObject(message)
+    }
+    
+    func addReceivedMessage(message: MailboxMessage) {
+        self.mutableSetValueForKey("receivedMessages").addObject(message)
+    }
+}

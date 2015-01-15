@@ -17,7 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        println("applicationDirectoryPath: \(applicationDirectoryPath())")
+        
         MagicalRecord.setupCoreDataStack()
+        
+        setupTestData();
         
         return true
     }
@@ -45,7 +49,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         MagicalRecord.cleanUp()
     }
+    
+    func applicationDirectoryPath() -> String {
+        return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).last! as String
+    }
 
+    func setupTestData() {
+        
+        var account = Mailbox.MR_findFirstByAttribute("accountName", withValue: "your_gmail_account@gmail.com") as? Mailbox
+        
+        if account == nil {
+            
+            account = Mailbox.MR_createEntity() as Mailbox!
+            account?.accountName = "your_gmail_account@gmail.com"
+            account?.server = "imap.gmail.com"
+            account?.port = NSNumber(unsignedInt: 993)
+            account?.loginName = "your_gmail_account"
+            account?.password = "your_gmail_password"
 
+        }
+        
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait();
+        
+    }
+    
+    
+    func getTestAccount() -> Mailbox {
+        return Mailbox.MR_findFirstByAttribute("accountName", withValue: "your_gmail_account@gmail.com") as Mailbox
+    }
+    
+
+   class func sharedAppDelegate() -> AppDelegate {
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
 }
 

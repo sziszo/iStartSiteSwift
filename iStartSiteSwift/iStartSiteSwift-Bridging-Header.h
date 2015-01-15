@@ -10,6 +10,7 @@
 #define iStartSiteSwift_iStartSiteSwift_Bridging_Header_h
 
 #import <CoreData+MagicalRecord.h>
+#import <MailCore/MailCore.h>
 #import "FontAwesomeKit.h"
 
 #endif

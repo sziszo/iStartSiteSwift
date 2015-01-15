@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3B0BE022C4895EF138B12B54 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 239862CFFE69E89CC58C659F /* libPods.a */; };
+		950403061A64A28D00F0B062 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403051A64A28D00F0B062 /* Categories.swift */; };
+		950403081A65E84F00F0B062 /* MailboxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403071A65E84F00F0B062 /* MailboxManager.swift */; };
+		9504030A1A68788700F0B062 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403091A68788700F0B062 /* Timer.swift */; };
 		954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E111A616226004A6C15 /* AppDelegate.swift */; };
 		954C1E141A616226004A6C15 /* SlideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E131A616226004A6C15 /* SlideMenuVC.swift */; };
 		954C1E171A616226004A6C15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954C1E151A616226004A6C15 /* Main.storyboard */; };
@@ -58,6 +61,9 @@
 		062165348979C900688D7C80 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		239862CFFE69E89CC58C659F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		45DAF3DE65190CAE01826705 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		950403051A64A28D00F0B062 /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
+		950403071A65E84F00F0B062 /* MailboxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailboxManager.swift; sourceTree = "<group>"; };
+		950403091A68788700F0B062 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		954C1E0C1A616226004A6C15 /* iStartSiteSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStartSiteSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		954C1E101A616226004A6C15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		954C1E111A616226004A6C15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +147,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9504030B1A687E7F00F0B062 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				950403091A68788700F0B062 /* Timer.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		954C1E031A616226004A6C15 = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +182,7 @@
 				954C1E9C1A618DD6004A6C15 /* Control */,
 				954C1E651A61894F004A6C15 /* Model */,
 				954C1E661A618957004A6C15 /* View */,
+				9504030B1A687E7F00F0B062 /* Utils */,
 				954C1E0F1A616226004A6C15 /* Supporting Files */,
 			);
 			path = iStartSiteSwift;
@@ -273,8 +288,10 @@
 		954C1E9C1A618DD6004A6C15 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				950403051A64A28D00F0B062 /* Categories.swift */,
 				954C1E131A616226004A6C15 /* SlideMenuVC.swift */,
 				954C1EA81A61BC89004A6C15 /* MailboxVC.swift */,
+				950403071A65E84F00F0B062 /* MailboxManager.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -434,8 +451,10 @@
 				954C1EA41A618EC0004A6C15 /* SBGestureTableViewCellAction.swift in Sources */,
 				954C1E971A618D58004A6C15 /* FAKZocial.m in Sources */,
 				954C1E6C1A6189D1004A6C15 /* MailboxMessage.swift in Sources */,
+				950403061A64A28D00F0B062 /* Categories.swift in Sources */,
 				954C1E741A618A5D004A6C15 /* ContactEmail.swift in Sources */,
 				954C1E701A6189D1004A6C15 /* Mailbox.swift in Sources */,
+				9504030A1A68788700F0B062 /* Timer.swift in Sources */,
 				954C1E781A618A5D004A6C15 /* Person.swift in Sources */,
 				954C1EA31A618EC0004A6C15 /* SBGestureTableViewCell.swift in Sources */,
 				954C1E7E1A618A5D004A6C15 /* Project.swift in Sources */,
@@ -446,6 +465,7 @@
 				954C1EA21A618EC0004A6C15 /* SBGestureTableView.swift in Sources */,
 				954C1E801A618A5D004A6C15 /* Company.swift in Sources */,
 				954C1E821A618A5D004A6C15 /* Employee.swift in Sources */,
+				950403081A65E84F00F0B062 /* MailboxManager.swift in Sources */,
 				954C1EA51A618EC0004A6C15 /* SBGestureTableViewCellSideView.swift in Sources */,
 				954C1E6A1A6189D0004A6C15 /* MailboxFolder.swift in Sources */,
 				954C1E7A1A618A5D004A6C15 /* User.swift in Sources */,

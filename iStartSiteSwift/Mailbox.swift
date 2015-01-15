@@ -22,3 +22,11 @@ class Mailbox: NSManagedObject {
     @NSManaged var folders: NSSet
 
 }
+
+extension Mailbox {
+    
+    func addFolder(folder: MailboxFolder) {
+        self.mutableSetValueForKey("folders").addObject(folder)
+    }
+    
+}
