@@ -32,7 +32,7 @@ class ArchivedCell: SBGestureTableViewCell {
 }
 
 
-class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate {
+class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController {
     
     var archives = [Archive]()
     var currentStatus: ArchiveStatus = .NotSet
@@ -51,6 +51,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     var archiveBlock: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     var rejectBlock: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     
+    var delegate: CenterViewControllerDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -62,7 +64,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         navigationItem.rightBarButtonItem = addButton
-        
+                
         setupIcons()
         
         
@@ -205,7 +207,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         var cellIdentifier: String
         switch (currentStatus) {
         case .Archived:
-            cellIdentifier = "ArchivedCell"
+            cellIdentifier = "ArchiveCell"
         default:
             cellIdentifier = "MessageCell"
         }
@@ -276,5 +278,18 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         archivedCell.subjectLabel?.text = message.subject;
     }
     
+    // MARK: MenuVIewController
     
+    func menuSelected(archiveStatus: ArchiveStatus) {
+        self.currentStatus = archiveStatus
+        
+        fetchArchives()
+        self.tableView.reloadData()
+        
+        delegate?.collapseSidePanels?()
+    }
+    
+    @IBAction func toggleMenu(sender: AnyObject) {
+        delegate?.toggleLeftPanel?()
+    }
 }

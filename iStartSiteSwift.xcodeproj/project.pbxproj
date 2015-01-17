@@ -11,6 +11,8 @@
 		950403061A64A28D00F0B062 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403051A64A28D00F0B062 /* Categories.swift */; };
 		950403081A65E84F00F0B062 /* MailboxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403071A65E84F00F0B062 /* MailboxManager.swift */; };
 		9504030A1A68788700F0B062 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403091A68788700F0B062 /* Timer.swift */; };
+		9531F11F1A688900006DFACA /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F11E1A688900006DFACA /* ContainerViewController.swift */; };
+		9531F1211A6889BE006DFACA /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F1201A6889BE006DFACA /* MenuVC.swift */; };
 		954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E111A616226004A6C15 /* AppDelegate.swift */; };
 		954C1E141A616226004A6C15 /* SlideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E131A616226004A6C15 /* SlideMenuVC.swift */; };
 		954C1E171A616226004A6C15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954C1E151A616226004A6C15 /* Main.storyboard */; };
@@ -64,6 +66,8 @@
 		950403051A64A28D00F0B062 /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		950403071A65E84F00F0B062 /* MailboxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailboxManager.swift; sourceTree = "<group>"; };
 		950403091A68788700F0B062 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		9531F11E1A688900006DFACA /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		9531F1201A6889BE006DFACA /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		954C1E0C1A616226004A6C15 /* iStartSiteSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStartSiteSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		954C1E101A616226004A6C15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		954C1E111A616226004A6C15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -288,10 +292,12 @@
 		954C1E9C1A618DD6004A6C15 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				9531F11E1A688900006DFACA /* ContainerViewController.swift */,
 				950403051A64A28D00F0B062 /* Categories.swift */,
 				954C1E131A616226004A6C15 /* SlideMenuVC.swift */,
 				954C1EA81A61BC89004A6C15 /* MailboxVC.swift */,
 				950403071A65E84F00F0B062 /* MailboxManager.swift */,
+				9531F1201A6889BE006DFACA /* MenuVC.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -448,6 +454,7 @@
 			files = (
 				954C1E961A618D58004A6C15 /* FAKIonIcons.m in Sources */,
 				954C1E641A617129004A6C15 /* iStartSiteSwift.xcdatamodeld in Sources */,
+				9531F1211A6889BE006DFACA /* MenuVC.swift in Sources */,
 				954C1EA41A618EC0004A6C15 /* SBGestureTableViewCellAction.swift in Sources */,
 				954C1E971A618D58004A6C15 /* FAKZocial.m in Sources */,
 				954C1E6C1A6189D1004A6C15 /* MailboxMessage.swift in Sources */,
@@ -468,6 +475,7 @@
 				950403081A65E84F00F0B062 /* MailboxManager.swift in Sources */,
 				954C1EA51A618EC0004A6C15 /* SBGestureTableViewCellSideView.swift in Sources */,
 				954C1E6A1A6189D0004A6C15 /* MailboxFolder.swift in Sources */,
+				9531F11F1A688900006DFACA /* ContainerViewController.swift in Sources */,
 				954C1E7A1A618A5D004A6C15 /* User.swift in Sources */,
 				954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */,
 				954C1E931A618D58004A6C15 /* FAKFontAwesome.m in Sources */,
