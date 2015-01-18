@@ -36,15 +36,6 @@
 		954C1E7E1A618A5D004A6C15 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E7D1A618A5D004A6C15 /* Project.swift */; };
 		954C1E801A618A5D004A6C15 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E7F1A618A5D004A6C15 /* Company.swift */; };
 		954C1E821A618A5D004A6C15 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E811A618A5D004A6C15 /* Employee.swift */; };
-		954C1E931A618D58004A6C15 /* FAKFontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E851A618D58004A6C15 /* FAKFontAwesome.m */; };
-		954C1E941A618D58004A6C15 /* FAKFoundationIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E871A618D58004A6C15 /* FAKFoundationIcons.m */; };
-		954C1E951A618D58004A6C15 /* FAKIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E891A618D58004A6C15 /* FAKIcon.m */; };
-		954C1E961A618D58004A6C15 /* FAKIonIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E8B1A618D58004A6C15 /* FAKIonIcons.m */; };
-		954C1E971A618D58004A6C15 /* FAKZocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E8D1A618D58004A6C15 /* FAKZocial.m */; };
-		954C1E981A618D58004A6C15 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 954C1E8E1A618D58004A6C15 /* FontAwesome.otf */; };
-		954C1E991A618D58004A6C15 /* foundation-icons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 954C1E901A618D58004A6C15 /* foundation-icons.ttf */; };
-		954C1E9A1A618D58004A6C15 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 954C1E911A618D58004A6C15 /* ionicons.ttf */; };
-		954C1E9B1A618D58004A6C15 /* zocial-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 954C1E921A618D58004A6C15 /* zocial-regular-webfont.ttf */; };
 		954C1EA21A618EC0004A6C15 /* SBGestureTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E9E1A618EC0004A6C15 /* SBGestureTableView.swift */; };
 		954C1EA31A618EC0004A6C15 /* SBGestureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E9F1A618EC0004A6C15 /* SBGestureTableViewCell.swift */; };
 		954C1EA41A618EC0004A6C15 /* SBGestureTableViewCellAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1EA01A618EC0004A6C15 /* SBGestureTableViewCellAction.swift */; };
@@ -99,21 +90,6 @@
 		954C1E7D1A618A5D004A6C15 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		954C1E7F1A618A5D004A6C15 /* Company.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		954C1E811A618A5D004A6C15 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
-		954C1E841A618D58004A6C15 /* FAKFontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAKFontAwesome.h; sourceTree = "<group>"; };
-		954C1E851A618D58004A6C15 /* FAKFontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAKFontAwesome.m; sourceTree = "<group>"; };
-		954C1E861A618D58004A6C15 /* FAKFoundationIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAKFoundationIcons.h; sourceTree = "<group>"; };
-		954C1E871A618D58004A6C15 /* FAKFoundationIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAKFoundationIcons.m; sourceTree = "<group>"; };
-		954C1E881A618D58004A6C15 /* FAKIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAKIcon.h; sourceTree = "<group>"; };
-		954C1E891A618D58004A6C15 /* FAKIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAKIcon.m; sourceTree = "<group>"; };
-		954C1E8A1A618D58004A6C15 /* FAKIonIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAKIonIcons.h; sourceTree = "<group>"; };
-		954C1E8B1A618D58004A6C15 /* FAKIonIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAKIonIcons.m; sourceTree = "<group>"; };
-		954C1E8C1A618D58004A6C15 /* FAKZocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAKZocial.h; sourceTree = "<group>"; };
-		954C1E8D1A618D58004A6C15 /* FAKZocial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAKZocial.m; sourceTree = "<group>"; };
-		954C1E8E1A618D58004A6C15 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
-		954C1E8F1A618D58004A6C15 /* FontAwesomeKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontAwesomeKit.h; sourceTree = "<group>"; };
-		954C1E901A618D58004A6C15 /* foundation-icons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "foundation-icons.ttf"; sourceTree = "<group>"; };
-		954C1E911A618D58004A6C15 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
-		954C1E921A618D58004A6C15 /* zocial-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zocial-regular-webfont.ttf"; sourceTree = "<group>"; };
 		954C1E9E1A618EC0004A6C15 /* SBGestureTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBGestureTableView.swift; sourceTree = "<group>"; };
 		954C1E9F1A618EC0004A6C15 /* SBGestureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBGestureTableViewCell.swift; sourceTree = "<group>"; };
 		954C1EA01A618EC0004A6C15 /* SBGestureTableViewCellAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBGestureTableViewCellAction.swift; sourceTree = "<group>"; };
@@ -238,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				954C1E9D1A618EC0004A6C15 /* SBGestureTableView */,
-				954C1E831A618D58004A6C15 /* FontAwesomeKit */,
 				954C1E151A616226004A6C15 /* Main.storyboard */,
 				954C1E1A1A616226004A6C15 /* LaunchScreen.xib */,
 				954C1E181A616226004A6C15 /* Images.xcassets */,
@@ -271,28 +246,6 @@
 				954C1E711A618A5C004A6C15 /* Contact.swift */,
 			);
 			name = bipo;
-			sourceTree = "<group>";
-		};
-		954C1E831A618D58004A6C15 /* FontAwesomeKit */ = {
-			isa = PBXGroup;
-			children = (
-				954C1E841A618D58004A6C15 /* FAKFontAwesome.h */,
-				954C1E851A618D58004A6C15 /* FAKFontAwesome.m */,
-				954C1E861A618D58004A6C15 /* FAKFoundationIcons.h */,
-				954C1E871A618D58004A6C15 /* FAKFoundationIcons.m */,
-				954C1E881A618D58004A6C15 /* FAKIcon.h */,
-				954C1E891A618D58004A6C15 /* FAKIcon.m */,
-				954C1E8A1A618D58004A6C15 /* FAKIonIcons.h */,
-				954C1E8B1A618D58004A6C15 /* FAKIonIcons.m */,
-				954C1E8C1A618D58004A6C15 /* FAKZocial.h */,
-				954C1E8D1A618D58004A6C15 /* FAKZocial.m */,
-				954C1E8E1A618D58004A6C15 /* FontAwesome.otf */,
-				954C1E8F1A618D58004A6C15 /* FontAwesomeKit.h */,
-				954C1E901A618D58004A6C15 /* foundation-icons.ttf */,
-				954C1E911A618D58004A6C15 /* ionicons.ttf */,
-				954C1E921A618D58004A6C15 /* zocial-regular-webfont.ttf */,
-			);
-			path = FontAwesomeKit;
 			sourceTree = "<group>";
 		};
 		954C1E9C1A618DD6004A6C15 /* Control */ = {
@@ -404,13 +357,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				954C1E9A1A618D58004A6C15 /* ionicons.ttf in Resources */,
 				954C1E171A616226004A6C15 /* Main.storyboard in Resources */,
 				954C1E1C1A616226004A6C15 /* LaunchScreen.xib in Resources */,
-				954C1E9B1A618D58004A6C15 /* zocial-regular-webfont.ttf in Resources */,
-				954C1E981A618D58004A6C15 /* FontAwesome.otf in Resources */,
 				954C1E191A616226004A6C15 /* Images.xcassets in Resources */,
-				954C1E991A618D58004A6C15 /* foundation-icons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,11 +410,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				954C1E961A618D58004A6C15 /* FAKIonIcons.m in Sources */,
 				954C1E641A617129004A6C15 /* iStartSiteSwift.xcdatamodeld in Sources */,
 				9531F1211A6889BE006DFACA /* MenuVC.swift in Sources */,
 				954C1EA41A618EC0004A6C15 /* SBGestureTableViewCellAction.swift in Sources */,
-				954C1E971A618D58004A6C15 /* FAKZocial.m in Sources */,
 				954C1E6C1A6189D1004A6C15 /* MailboxMessage.swift in Sources */,
 				950403061A64A28D00F0B062 /* Categories.swift in Sources */,
 				954C1E741A618A5D004A6C15 /* ContactEmail.swift in Sources */,
@@ -475,9 +422,7 @@
 				954C1EA31A618EC0004A6C15 /* SBGestureTableViewCell.swift in Sources */,
 				954C1E7E1A618A5D004A6C15 /* Project.swift in Sources */,
 				954C1E141A616226004A6C15 /* SlideMenuVC.swift in Sources */,
-				954C1E951A618D58004A6C15 /* FAKIcon.m in Sources */,
 				954C1E721A618A5C004A6C15 /* Contact.swift in Sources */,
-				954C1E941A618D58004A6C15 /* FAKFoundationIcons.m in Sources */,
 				954C1EA21A618EC0004A6C15 /* SBGestureTableView.swift in Sources */,
 				954C1E801A618A5D004A6C15 /* Company.swift in Sources */,
 				954C1E821A618A5D004A6C15 /* Employee.swift in Sources */,
@@ -489,7 +434,6 @@
 				954C1E7A1A618A5D004A6C15 /* User.swift in Sources */,
 				954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */,
 				9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */,
-				954C1E931A618D58004A6C15 /* FAKFontAwesome.m in Sources */,
 				9531F12B1A6AA142006DFACA /* LoginService.swift in Sources */,
 				954C1E761A618A5D004A6C15 /* ArchiveGroup.swift in Sources */,
 				954C1E7C1A618A5D004A6C15 /* Archive.swift in Sources */,
