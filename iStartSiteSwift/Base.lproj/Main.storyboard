@@ -110,7 +110,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="J2O-Zh-Htk">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" id="WTw-zW-G5T">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="WTw-zW-G5T">
                             <connections>
                                 <action selector="toggleMenu:" destination="ch5-Lp-bGa" id="v7Y-O7-d0P"/>
                             </connections>

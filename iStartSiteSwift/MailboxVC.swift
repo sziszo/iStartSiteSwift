@@ -67,6 +67,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         navigationItem.rightBarButtonItem = addButton
         
         let size = CGSizeMake(30, 30)
+        self.navigationItem.leftBarButtonItem?.title = ""
         self.navigationItem.leftBarButtonItem?.image = menuIcon.imageWithSize(size)
         
         setupIcons()
