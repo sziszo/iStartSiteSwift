@@ -1,6 +1,6 @@
 platform :ios, '8.0'
 
-pod 'MagicalRecord'
-pod 'mailcore2-ios'
-pod 'Parse'
+pod 'MagicalRecord', '~> 2.2'
+pod 'mailcore2-ios', '~> 0.5.0'
 pod 'FontAwesomeKit', '~> 2.2.0'
+pod 'Parse'
