@@ -11,6 +11,7 @@
 
 #import <CoreData+MagicalRecord.h>
 #import <MailCore/MailCore.h>
+#import <Parse/Parse.h>
 #import "FontAwesomeKit.h"
 
 #endif

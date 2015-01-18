@@ -14,11 +14,16 @@ protocol MenuViewControllerDelegate {
 
 class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     
-    var delegate: MenuViewControllerDelegate?
+    var delegate: MenuViewControllerDelegate!
     
     let menus = ["Mailbox", "Archived", "Rejected"]
     
+    let checkIcon = FAKIonIcons.iosCheckmarkOutlineIconWithSize(30)
+    let closeIcon = FAKIonIcons.iosCloseOutlineIconWithSize(30)
+    let emailIcon = FAKIonIcons.iosEmailOutlineIconWithSize(30)
+    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var txtLoggedInUser: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +31,18 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
         println("menues: \(menus)")
         
         tableView.reloadData()
+        
+        if let currentUser = AppDelegate.sharedAppDelegate().settings.currentUser {
+            txtLoggedInUser.text = currentUser.userName
+        }
+        
+        setupIcons()
+    }
+    
+    func setupIcons() {
+        checkIcon.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor())
+        closeIcon.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor())
+        emailIcon.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor())
     }
     
     // MARK: Table View Data Source
@@ -41,8 +58,19 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as UITableViewCell
         
+        let size = CGSizeMake(30, 30)
+        
         cell.textLabel?.text = menus[indexPath.row]
         
+        let archiveStatus: ArchiveStatus = ArchiveStatus(rawValue: indexPath.row)!
+        switch (archiveStatus) {
+        case .NotSet:
+            cell.imageView?.image = emailIcon.imageWithSize(size)
+        case .Archived:
+            cell.imageView?.image = checkIcon.imageWithSize(size)
+        case .Rejected:
+            cell.imageView?.image = closeIcon.imageWithSize(size)
+        }
         return cell
     }
     
@@ -51,7 +79,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedMenu = menus[indexPath.row]
         println("selected menu is \(selectedMenu)")
-        delegate?.menuSelected(ArchiveStatus(rawValue: indexPath.row)!)
+        delegate.menuSelected(ArchiveStatus(rawValue: indexPath.row)!)
     }
 
 }

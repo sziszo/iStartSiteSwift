@@ -13,6 +13,9 @@
 		9504030A1A68788700F0B062 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403091A68788700F0B062 /* Timer.swift */; };
 		9531F11F1A688900006DFACA /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F11E1A688900006DFACA /* ContainerViewController.swift */; };
 		9531F1211A6889BE006DFACA /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F1201A6889BE006DFACA /* MenuVC.swift */; };
+		9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F1241A69E5E9006DFACA /* LoginVC.swift */; };
+		9531F12B1A6AA142006DFACA /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F12A1A6AA142006DFACA /* LoginService.swift */; };
+		9531F12D1A6B4B94006DFACA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F12C1A6B4B94006DFACA /* Settings.swift */; };
 		954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E111A616226004A6C15 /* AppDelegate.swift */; };
 		954C1E141A616226004A6C15 /* SlideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E131A616226004A6C15 /* SlideMenuVC.swift */; };
 		954C1E171A616226004A6C15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954C1E151A616226004A6C15 /* Main.storyboard */; };
@@ -68,6 +71,9 @@
 		950403091A68788700F0B062 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		9531F11E1A688900006DFACA /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		9531F1201A6889BE006DFACA /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
+		9531F1241A69E5E9006DFACA /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		9531F12A1A6AA142006DFACA /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		9531F12C1A6B4B94006DFACA /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		954C1E0C1A616226004A6C15 /* iStartSiteSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStartSiteSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		954C1E101A616226004A6C15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		954C1E111A616226004A6C15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -298,6 +304,9 @@
 				954C1EA81A61BC89004A6C15 /* MailboxVC.swift */,
 				950403071A65E84F00F0B062 /* MailboxManager.swift */,
 				9531F1201A6889BE006DFACA /* MenuVC.swift */,
+				9531F1241A69E5E9006DFACA /* LoginVC.swift */,
+				9531F12A1A6AA142006DFACA /* LoginService.swift */,
+				9531F12C1A6B4B94006DFACA /* Settings.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -472,13 +481,16 @@
 				954C1EA21A618EC0004A6C15 /* SBGestureTableView.swift in Sources */,
 				954C1E801A618A5D004A6C15 /* Company.swift in Sources */,
 				954C1E821A618A5D004A6C15 /* Employee.swift in Sources */,
+				9531F12D1A6B4B94006DFACA /* Settings.swift in Sources */,
 				950403081A65E84F00F0B062 /* MailboxManager.swift in Sources */,
 				954C1EA51A618EC0004A6C15 /* SBGestureTableViewCellSideView.swift in Sources */,
 				954C1E6A1A6189D0004A6C15 /* MailboxFolder.swift in Sources */,
 				9531F11F1A688900006DFACA /* ContainerViewController.swift in Sources */,
 				954C1E7A1A618A5D004A6C15 /* User.swift in Sources */,
 				954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */,
+				9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */,
 				954C1E931A618D58004A6C15 /* FAKFontAwesome.m in Sources */,
+				9531F12B1A6AA142006DFACA /* LoginService.swift in Sources */,
 				954C1E761A618A5D004A6C15 /* ArchiveGroup.swift in Sources */,
 				954C1E7C1A618A5D004A6C15 /* Archive.swift in Sources */,
 				954C1EA91A61BC89004A6C15 /* MailboxVC.swift in Sources */,
@@ -606,6 +618,10 @@
 			baseConfigurationReference = 062165348979C900688D7C80 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = iStartSiteSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -618,6 +634,10 @@
 			baseConfigurationReference = 45DAF3DE65190CAE01826705 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = iStartSiteSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
