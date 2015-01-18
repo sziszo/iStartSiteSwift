@@ -39,6 +39,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var sbgTableView: SBGestureTableView!
     
+    let menuIcon = FAKIonIcons.androidMenuIconWithSize(30)
     let checkIcon = FAKIonIcons.iosCheckmarkIconWithSize(30)
     let closeIcon = FAKIonIcons.iosCloseIconWithSize(30)
     let composeIcon = FAKIonIcons.iosComposeIconWithSize(30)
@@ -64,9 +65,11 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         navigationItem.rightBarButtonItem = addButton
-                
-        setupIcons()
         
+        let size = CGSizeMake(30, 30)
+        self.navigationItem.leftBarButtonItem?.image = menuIcon.imageWithSize(size)
+        
+        setupIcons()
         
         archiveBlock = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             

@@ -110,7 +110,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="J2O-Zh-Htk">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="WTw-zW-G5T">
+                        <barButtonItem key="leftBarButtonItem" id="WTw-zW-G5T">
                             <connections>
                                 <action selector="toggleMenu:" destination="ch5-Lp-bGa" id="v7Y-O7-d0P"/>
                             </connections>
@@ -139,6 +139,7 @@
                         <viewControllerLayoutGuide type="bottom" id="iSl-fn-Dqq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4rs-rR-8UY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bDe-5g-X4A">
@@ -208,6 +209,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Wzg-EM-VCY"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="w4m-pu-Go5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu-25" translatesAutoresizingMaskIntoConstraints="NO" id="cwV-8S-Bvc">
@@ -477,10 +479,10 @@
                                             <exclude reference="MG5-oc-u21"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="3Va-f7-Y8Y"/>
-                                            <exclude reference="3gJ-uZ-2Lv"/>
                                             <exclude reference="mko-DR-6u9"/>
                                             <exclude reference="q7S-Yv-Dnf"/>
+                                            <exclude reference="3Va-f7-Y8Y"/>
+                                            <exclude reference="3gJ-uZ-2Lv"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -489,10 +491,10 @@
                                             <include reference="MG5-oc-u21"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="3Va-f7-Y8Y"/>
-                                            <include reference="3gJ-uZ-2Lv"/>
                                             <include reference="mko-DR-6u9"/>
                                             <include reference="q7S-Yv-Dnf"/>
+                                            <include reference="3Va-f7-Y8Y"/>
+                                            <include reference="3gJ-uZ-2Lv"/>
                                         </mask>
                                     </variation>
                                 </view>
