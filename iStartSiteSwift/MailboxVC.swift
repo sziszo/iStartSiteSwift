@@ -16,21 +16,6 @@ enum ArchiveStatus: Int  {
     case Rejected = 2
 }
 
-class MessageCell: SBGestureTableViewCell {
-    @IBOutlet weak var senderLabel: UILabel?
-    @IBOutlet weak var subjectLabel: UILabel?
-    @IBOutlet weak var contentLabel: UILabel?
-    @IBOutlet weak var senderDateLabel: UILabel?
-}
-
-class ArchivedCell: SBGestureTableViewCell {
-    @IBOutlet weak var companyLabel: UILabel?
-    @IBOutlet weak var subjectLabel: UILabel?
-    @IBOutlet weak var personLabel: UILabel?
-    @IBOutlet weak var orderNrLabel: UILabel?
-    @IBOutlet weak var archivedAtLabel: UILabel?
-}
-
 
 class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController {
     
@@ -60,6 +45,11 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.estimatedRowHeight = 100.0;
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+
         
         sbgTableView = self.tableView as SBGestureTableView;
         
@@ -212,6 +202,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         switch (currentStatus) {
         case .Archived:
             cellIdentifier = "ArchiveCell"
+        case .NotSet:
+            cellIdentifier = "TimelineCell"
         default:
             cellIdentifier = "MessageCell"
         }
@@ -234,14 +226,16 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         let archive = archives[indexPath.row]
         
-        var cellIdentifier: String
         switch (currentStatus) {
         case .Archived:
+            println("configure archive cell")
             configureArchivedCell(cell, withArchiveItem: archive)
-        default:
+        case .Rejected:
             let message = archive.message
             configureMessageCell(cell, withMessage: message)
-            
+        case .NotSet:
+            let message = archive.message
+            configureTimelineCell(cell, withMessage: message)
         }
         
     }
@@ -255,6 +249,18 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         messageCell.senderDateLabel?.text = message?.senderDate.dateStringWithFormat("MMM d")
         messageCell.senderLabel?.text = "Test@gmail.com"
     }
+    
+    func configureTimelineCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
+        
+        let timelineCell = cell as TimelineCell2
+        
+        timelineCell.profileImageView.image = UIImage(named: "person")
+        timelineCell.subjectLabel.text = message?.subject
+        timelineCell.dateLabel.text = message?.senderDate.dateStringWithFormat("MMM d")
+        timelineCell.nameLabel?.text = "Test@gmail.com"
+        timelineCell.contentLabel?.text = "Checking out of the hotel today. It was really fun to see everyone and catch up. We should have more conferences like this so we can share ideas."
+    }
+    
     
     func configureArchivedCell(cell: SBGestureTableViewCell, withArchiveItem archived: Archive) {
         
@@ -295,5 +301,69 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func toggleMenu(sender: AnyObject) {
         delegate?.toggleLeftPanel?()
+    }
+}
+
+class MessageCell: SBGestureTableViewCell {
+    @IBOutlet weak var senderLabel: UILabel?
+    @IBOutlet weak var subjectLabel: UILabel?
+    @IBOutlet weak var contentLabel: UILabel?
+    @IBOutlet weak var senderDateLabel: UILabel?
+}
+
+class ArchivedCell: SBGestureTableViewCell {
+    @IBOutlet weak var companyLabel: UILabel?
+    @IBOutlet weak var subjectLabel: UILabel?
+    @IBOutlet weak var personLabel: UILabel?
+    @IBOutlet weak var orderNrLabel: UILabel?
+    @IBOutlet weak var archivedAtLabel: UILabel?
+}
+
+class TimelineCell2 : SBGestureTableViewCell {
+    
+    @IBOutlet var typeImageView : UIImageView!
+    @IBOutlet var profileImageView : UIImageView!
+    @IBOutlet var dateImageView : UIImageView!
+    @IBOutlet var photoImageView : UIImageView?
+    
+    @IBOutlet var nameLabel : UILabel?
+    @IBOutlet var subjectLabel : UILabel!
+    @IBOutlet var contentLabel : UILabel?
+    @IBOutlet var dateLabel : UILabel!
+    
+    override func awakeFromNib() {
+        
+        let size = CGSizeMake(30, 30)
+        let menuIcon = FAKIonIcons.iosEmailOutlineIconWithSize(30)
+        typeImageView.image = menuIcon.imageWithSize(size)
+        typeImageView.layer.cornerRadius = 20
+        
+//        dateImageView.image = UIImage(named: "clock")
+        let size2 = CGSizeMake(15, 15)
+        let clockIcon = FAKIonIcons.iosClockOutlineIconWithSize(15);
+        dateImageView.image = clockIcon.imageWithSize(size2)
+        
+        profileImageView.layer.cornerRadius = 30
+        
+        nameLabel?.font = UIFont(name: "Avenir-Book", size: 16)
+        nameLabel?.textColor = UIColor.blackColor()
+        
+        contentLabel?.font = UIFont(name: "Avenir-Book", size: 14)
+        contentLabel?.textColor = UIColor(white: 0.6, alpha: 1.0)
+        
+        dateLabel.font = UIFont(name: "Avenir-Book", size: 14)
+        dateLabel.textColor = UIColor(white: 0.6, alpha: 1.0)
+        
+        photoImageView?.layer.borderWidth = 0.4
+        photoImageView?.layer.borderColor = UIColor(white: 0.92, alpha: 1.0).CGColor
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if contentLabel != nil {
+            let label = contentLabel!
+            label.preferredMaxLayoutWidth = CGRectGetWidth(label.frame)
+        }
     }
 }
