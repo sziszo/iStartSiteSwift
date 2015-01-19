@@ -191,7 +191,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="content" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czx-KN-pDU">
-                                            <rect key="frame" x="114" y="54" width="472" height="21"/>
+                                            <rect key="frame" x="114" y="54" width="472" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -224,14 +224,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zEr-2M-nNN">
-                                            <rect key="frame" x="114" y="81" width="14" height="14"/>
+                                            <rect key="frame" x="114" y="80" width="14" height="14"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="14" id="2Rh-L9-5bh"/>
                                                 <constraint firstAttribute="height" constant="14" id="67r-OP-5x7"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="sent date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J26-Zo-hmR">
-                                            <rect key="frame" x="136" y="78" width="72" height="22"/>
+                                            <rect key="frame" x="136" y="80" width="72" height="14"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -245,12 +245,13 @@
                                         <constraint firstItem="zEr-2M-nNN" firstAttribute="leading" secondItem="czx-KN-pDU" secondAttribute="leading" id="Dmp-Z5-OkA"/>
                                         <constraint firstItem="gzO-Nj-93v" firstAttribute="centerX" secondItem="pd2-hD-0Dr" secondAttribute="centerX" id="GhZ-nd-DKY"/>
                                         <constraint firstItem="tsL-JS-cJM" firstAttribute="top" secondItem="t4Y-Zk-cZn" secondAttribute="topMargin" constant="6" id="I95-xg-PU0"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="zEr-2M-nNN" secondAttribute="bottom" constant="3" id="Iqt-x1-VCn"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="pd2-hD-0Dr" secondAttribute="bottom" constant="-8" id="J03-Fo-OP0"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="J26-Zo-hmR" secondAttribute="bottom" constant="-3" id="Krn-jY-gwf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="J26-Zo-hmR" secondAttribute="bottom" constant="3" id="Krn-jY-gwf"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="YYb-mv-mDt" secondAttribute="trailing" constant="6" id="RZb-6h-XN4"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="czx-KN-pDU" secondAttribute="trailing" constant="6" id="WvI-Ot-Qe8"/>
                                         <constraint firstItem="pd2-hD-0Dr" firstAttribute="leading" secondItem="t4Y-Zk-cZn" secondAttribute="leadingMargin" constant="20" id="aDS-kU-LWr"/>
-                                        <constraint firstItem="J26-Zo-hmR" firstAttribute="top" secondItem="czx-KN-pDU" secondAttribute="bottom" constant="3" id="ceT-nN-RPJ"/>
+                                        <constraint firstItem="J26-Zo-hmR" firstAttribute="top" secondItem="czx-KN-pDU" secondAttribute="bottom" constant="6" id="ceT-nN-RPJ"/>
                                         <constraint firstItem="zEr-2M-nNN" firstAttribute="top" secondItem="czx-KN-pDU" secondAttribute="bottom" constant="6" id="gLn-1T-JYI"/>
                                         <constraint firstItem="tsL-JS-cJM" firstAttribute="leading" secondItem="gzO-Nj-93v" secondAttribute="trailing" constant="4" id="la9-zg-eP9"/>
                                         <constraint firstItem="gzO-Nj-93v" firstAttribute="top" secondItem="t4Y-Zk-cZn" secondAttribute="topMargin" constant="15" id="ssR-xO-Ctg"/>
@@ -488,8 +489,8 @@
                                     <action selector="login:" destination="ydm-Hc-Nyc" eventType="touchUpInside" id="8A6-4z-XlC"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbn-jm-kM6">
-                                <rect key="frame" x="451" y="271" width="83" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbn-jm-kM6">
+                                <rect key="frame" x="481" y="271" width="53" height="30"/>
                                 <state key="normal" title="Sign up">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
