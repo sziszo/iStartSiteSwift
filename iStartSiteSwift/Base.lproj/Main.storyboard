@@ -431,7 +431,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Felhasználónév" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M4Y-z3-bDp">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Felhasználónév" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M4Y-z3-bDp">
                                 <rect key="frame" x="66" y="186" width="468" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -480,7 +480,7 @@
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9WY-LN-aEo">
-                                <rect key="frame" x="66" y="276" width="38" height="30"/>
+                                <rect key="frame" x="66" y="271" width="38" height="30"/>
                                 <state key="normal" title="Login">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -488,13 +488,13 @@
                                     <action selector="login:" destination="ydm-Hc-Nyc" eventType="touchUpInside" id="8A6-4z-XlC"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbn-jm-kM6">
-                                <rect key="frame" x="451" y="276" width="83" height="30"/>
-                                <state key="normal" title="Registration">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbn-jm-kM6">
+                                <rect key="frame" x="451" y="271" width="83" height="30"/>
+                                <state key="normal" title="Sign up">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="login:" destination="ydm-Hc-Nyc" eventType="touchUpInside" id="3JD-Kk-qEV"/>
+                                    <action selector="register:" destination="ydm-Hc-Nyc" eventType="touchUpInside" id="wks-P6-5Ti"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -502,17 +502,17 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="M4Y-z3-bDp" secondAttribute="centerX" id="402-bw-j0n"/>
                             <constraint firstAttribute="centerX" secondItem="xwD-3T-wfC" secondAttribute="centerX" id="4Cb-qR-7Hc"/>
-                            <constraint firstItem="9WY-LN-aEo" firstAttribute="top" secondItem="Pw9-3f-cXN" secondAttribute="bottom" constant="20" id="I0o-jY-l8Y"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="nbn-jm-kM6" secondAttribute="trailing" constant="50" id="NjZ-eF-hUp"/>
+                            <constraint firstItem="9WY-LN-aEo" firstAttribute="top" secondItem="Pw9-3f-cXN" secondAttribute="bottom" constant="15" id="I0o-jY-l8Y"/>
                             <constraint firstItem="Pw9-3f-cXN" firstAttribute="height" secondItem="M4Y-z3-bDp" secondAttribute="height" id="SSW-VT-RjB"/>
                             <constraint firstItem="M4Y-z3-bDp" firstAttribute="leading" secondItem="DPN-2q-hI3" secondAttribute="leadingMargin" constant="50" id="T6C-AW-1qK"/>
                             <constraint firstItem="Pw9-3f-cXN" firstAttribute="leading" secondItem="9WY-LN-aEo" secondAttribute="leading" id="Tr4-qY-WkF"/>
                             <constraint firstItem="xwD-3T-wfC" firstAttribute="top" secondItem="m0G-eC-PlT" secondAttribute="bottom" constant="104" id="YB9-Ly-4Tb"/>
                             <constraint firstItem="Pw9-3f-cXN" firstAttribute="leading" secondItem="M4Y-z3-bDp" secondAttribute="leading" id="eif-14-BIy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="M4Y-z3-bDp" secondAttribute="trailing" constant="50" id="jp4-BO-nqW"/>
+                            <constraint firstItem="nbn-jm-kM6" firstAttribute="trailing" secondItem="Pw9-3f-cXN" secondAttribute="trailing" id="vwW-YL-dny"/>
                             <constraint firstItem="Pw9-3f-cXN" firstAttribute="top" secondItem="M4Y-z3-bDp" secondAttribute="bottom" constant="10" id="wOc-zB-rk9"/>
                             <constraint firstItem="M4Y-z3-bDp" firstAttribute="top" secondItem="xwD-3T-wfC" secondAttribute="bottom" constant="25" id="x84-8D-IrC"/>
-                            <constraint firstItem="nbn-jm-kM6" firstAttribute="top" secondItem="Pw9-3f-cXN" secondAttribute="bottom" constant="20" id="ye4-km-E9M"/>
+                            <constraint firstItem="nbn-jm-kM6" firstAttribute="top" secondItem="Pw9-3f-cXN" secondAttribute="bottom" constant="15" id="ye4-km-E9M"/>
                             <constraint firstItem="Pw9-3f-cXN" firstAttribute="width" secondItem="M4Y-z3-bDp" secondAttribute="width" id="zJM-nf-Jgf"/>
                         </constraints>
                     </view>

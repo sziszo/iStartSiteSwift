@@ -47,6 +47,7 @@ class LoginVC: UIViewController {
                 let errorString = error.userInfo?["error"] as String
                 UIAlertView(title: "Registration failed", message: errorString, delegate: nil, cancelButtonTitle: "Ok").show()
             } else {
+                AppDelegate.sharedAppDelegate().settings.currentUser = user
                 UIAlertView(title: "Success", message: "Successfull registration", delegate: nil, cancelButtonTitle: "Ok").show()
                 self.performSegueWithIdentifier("Login", sender: self)
             }
