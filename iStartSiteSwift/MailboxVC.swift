@@ -282,7 +282,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkIcon.imageWithSize(size), color: greenColor, fraction: 0.3, didTriggerBlock: archiveBlock)
 //        cell.secondLeftAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.6, didTriggerBlock: removeCellBlock)
-        cell.firstRightAction = SBGestureTableViewCellAction(icon: composeIcon.imageWithSize(size), color: yellowColor, fraction: 0.3, didTriggerBlock: rejectBlock)
+        cell.firstRightAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.3, didTriggerBlock: rejectBlock)
 //        cell.secondRightAction = SBGestureTableViewCellAction(icon: clockIcon.imageWithSize(size), color: brownColor, fraction: 0.6, didTriggerBlock: removeCellBlock)
         
         let archive = archives[indexPath.section][indexPath.row]
@@ -353,10 +353,31 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         return self.sections[section]
     }
     
-//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        
-//    }
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let  headerCell = tableView.dequeueReusableCellWithIdentifier("TimelineHeaderCell") as TimelineHeaderCell
+        headerCell.backgroundColor = UIColor.whiteColor()
+        
+        headerCell.headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)?
+        
+        return headerCell
+    }
     
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let  footerView = tableView.dequeueReusableCellWithIdentifier("TimelineFooterCell") as UITableViewCell
+        footerView.backgroundColor = UIColor.whiteColor()
+        
+        return footerView
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 25.0
+    }
+    
+
     // MARK: MenuVIewController
     
     func menuSelected(archiveStatus: ArchiveStatus) {
@@ -435,4 +456,22 @@ class TimelineCell2 : SBGestureTableViewCell {
             label.preferredMaxLayoutWidth = CGRectGetWidth(label.frame)
         }
     }
+}
+
+
+class TimelineHeaderCell: UITableViewCell {
+    
+    @IBOutlet var headerLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+
 }

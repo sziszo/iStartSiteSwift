@@ -268,6 +268,57 @@
                                     <outlet property="typeImageView" destination="gzO-Nj-93v" id="Fxe-si-eIk"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimelineHeaderCell" rowHeight="25" id="0ma-Fr-4Ro" userLabel="TimelineHeaderCell" customClass="TimelineHeaderCell" customModule="iStartSiteSwift" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0ma-Fr-4Ro" id="coE-MD-Yt1">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V2u-c9-uhk">
+                                            <rect key="frame" x="28" y="0.0" width="5" height="24"/>
+                                            <color key="backgroundColor" white="0.92000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="5" id="Uea-Do-cA4"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jx9-R2-0f7">
+                                            <rect key="frame" x="279" y="2" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="jx9-R2-0f7" secondAttribute="centerY" id="0Fi-3p-X8v"/>
+                                        <constraint firstItem="V2u-c9-uhk" firstAttribute="leading" secondItem="coE-MD-Yt1" secondAttribute="leadingMargin" constant="20" id="9Nh-p4-7oM"/>
+                                        <constraint firstAttribute="centerX" secondItem="jx9-R2-0f7" secondAttribute="centerX" id="Qiv-ia-Tzk"/>
+                                        <constraint firstItem="V2u-c9-uhk" firstAttribute="top" secondItem="coE-MD-Yt1" secondAttribute="topMargin" constant="-8" id="bH8-uX-95O"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="V2u-c9-uhk" secondAttribute="bottom" constant="-8" id="tmq-yS-fsq"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="headerLabel" destination="jx9-R2-0f7" id="zFx-hN-wC4"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimelineFooterCell" rowHeight="10" id="OQb-5J-wVJ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OQb-5J-wVJ" id="riq-A1-elw">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CMQ-9C-8H9">
+                                            <rect key="frame" x="28" y="0.0" width="5" height="24"/>
+                                            <color key="backgroundColor" white="0.92000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="5" id="Kdb-I9-kd4"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="CMQ-9C-8H9" firstAttribute="leading" secondItem="riq-A1-elw" secondAttribute="leadingMargin" constant="20" id="NmO-LZ-W5f"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="CMQ-9C-8H9" secondAttribute="bottom" constant="-8" id="ado-nv-FVc"/>
+                                        <constraint firstItem="CMQ-9C-8H9" firstAttribute="top" secondItem="riq-A1-elw" secondAttribute="topMargin" constant="-8" id="fNA-ox-h3l"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="ch5-Lp-bGa" id="qrJ-Jq-Bmo"/>
