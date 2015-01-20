@@ -320,6 +320,33 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageHeaderCell" rowHeight="25" id="zNo-xv-Bha" userLabel="MessageHeaderCell" customClass="TimelineHeaderCell" customModule="iStartSiteSwift" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zNo-xv-Bha" id="eOZ-s8-QqD">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6T-Fr-F59">
+                                            <rect key="frame" x="279" y="1" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="R6T-Fr-F59" secondAttribute="centerY" id="EOe-Hn-bZ5"/>
+                                        <constraint firstAttribute="centerX" secondItem="R6T-Fr-F59" secondAttribute="centerX" id="rmb-Bo-1dL"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="headerLabel" destination="R6T-Fr-F59" id="WQx-JA-Bta"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageFooterCell" rowHeight="10" id="hTG-r4-s1N" userLabel="MessageHeaderCell" customClass="TimelineHeaderCell" customModule="iStartSiteSwift" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hTG-r4-s1N" id="RXb-PE-X7x">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="ch5-Lp-bGa" id="qrJ-Jq-Bmo"/>
@@ -337,9 +364,12 @@
                             <rect key="frame" x="180" y="7" width="240" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="Plain"/>
+                                <segment title="Simple"/>
                                 <segment title="Grouped"/>
                             </segments>
+                            <connections>
+                                <action selector="segmentControlDidChange:" destination="ch5-Lp-bGa" eventType="valueChanged" id="SPy-Vf-5V7"/>
+                            </connections>
                         </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="S1k-tt-byM"/>
                     </navigationItem>

@@ -16,13 +16,19 @@ enum ArchiveStatus: Int  {
     case Rejected = 2
 }
 
+enum TableStyle {
+    case Simple
+    case Grouped
+}
+
 
 class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController {
     
-    var archives = [[Archive]]()
-    var sections = [String]()
+    private var archives = [[Archive]]()
+    private var sections = [String]()
     
-    var currentStatus: ArchiveStatus = .NotSet
+    private var currentStatus: ArchiveStatus = .NotSet
+    private var tableStyle: TableStyle = .Simple
     
     @IBOutlet weak var sbgTableView: SBGestureTableView!
     
@@ -36,8 +42,9 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     let yellowColor = UIColor(red: 236.0/255, green: 223.0/255, blue: 60.0/255, alpha: 1)
     let brownColor = UIColor(red: 182.0/255, green: 127.0/255, blue: 78.0/255, alpha: 1)
     
-    var archiveBlock: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
-    var rejectBlock: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
+    private var archiveBlock: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
+    private var rejectBlock: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
+    private var notSetBlock: ((SBGestureTableView, SBGestureTableViewCell) -> Void)!
     
     var delegate: CenterViewControllerDelegate?
     
@@ -75,15 +82,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             self.setArchiveStatus(ArchiveStatus.Archived, atIndexPath: indexPath!)
             
             //remove cell
-            self.removeItemAtIndexPath(indexPath!)
-            tableView.removeCell(cell, duration: 0.3, completion: nil)
+            self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
             
-//            if self.archives[indexPath!.section].isEmpty {
-//                //remove section
-//                self.archives.removeAtIndex(indexPath!.section)
-//                tableView.deleteSections(NSIndexSet(index: indexPath!.section), withRowAnimation: .Fade)
-//                
-//            }
         }
 
         rejectBlock = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
@@ -95,17 +95,23 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             self.setArchiveStatus(ArchiveStatus.Rejected, atIndexPath: indexPath!)
             
             //remove cell
-            self.removeItemAtIndexPath(indexPath!)
-            tableView.removeCell(cell, duration: 0.3, completion: nil)
-
-//            if self.archives[indexPath!.section].isEmpty {
-//                //remove section
-//                self.archives.removeAtIndex(indexPath!.section)
-//                tableView.deleteSections(NSIndexSet(index: indexPath!.section), withRowAnimation: .Fade)
-//                
-//            }
+            self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
             
         }
+        
+        notSetBlock = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
+            
+            let indexPath = tableView.indexPathForCell(cell)
+            println("Set item's status at \(indexPath) to NotSet")
+            
+            //update ArchiveStatus
+            self.setArchiveStatus(ArchiveStatus.NotSet, atIndexPath: indexPath!)
+            
+            //remove cell
+            self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
+
+        }
+
         
         fetchArchives()
         
@@ -114,7 +120,21 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         initRefreshControl()
     }
     
-    func removeItemAtIndexPath(indexPath: NSIndexPath) {
+    private func removeTableView(tableView: SBGestureTableView, cell: SBGestureTableViewCell, atIndexPath indexPath: NSIndexPath) {
+        
+        self.removeItemAtIndexPath(indexPath)
+        tableView.removeCell(cell, duration: 0.3) {
+            var items = self.archives[indexPath.section]
+            if items.count == 0 {
+                self.archives.removeAtIndex(indexPath.section)
+                self.sections.removeAtIndex(indexPath.section)
+            }
+            
+            tableView.reloadData()
+        }
+    }
+    
+    private func removeItemAtIndexPath(indexPath: NSIndexPath) {
         var items = self.archives[indexPath.section]
         if items.count > 0 {
             items.removeAtIndex(indexPath.row)
@@ -123,15 +143,17 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    func setArchiveStatus(status: ArchiveStatus, atIndexPath indexPath: NSIndexPath ) {
+    private func setArchiveStatus(status: ArchiveStatus, atIndexPath indexPath: NSIndexPath ) {
         
         let archive = archives[indexPath.section][indexPath.row]
         archive.archiveStatus = status.rawValue
+        archive.archivedAt = NSDate()
+        
         NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
         
     }
     
-    func setupIcons() {
+    private func setupIcons() {
         checkIcon.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor())
         closeIcon.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor())
         composeIcon.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor())
@@ -148,33 +170,69 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
     }
     
-    func fetchArchives() {
+    private func fetchArchives() {
         let fetchRequest = Archive.MR_createFetchRequest()
         
-        //        let sortDescriptor = NSSortDescriptor(key: "message.uid", ascending: true)
-        //        fetchRequest.sortDescriptors = [sortDescriptor]
+        switch self.currentStatus {
+        case .NotSet:
+            let sortDescriptor = NSSortDescriptor(key: "message.senderDate", ascending: false)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        default:
+            let sortDescriptor = NSSortDescriptor(key: "archivedAt", ascending: false)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+
+        }
         
         let predicate = NSPredicate(format: "archiveStatus == %d", currentStatus.rawValue)
         fetchRequest.predicate = predicate
         
         var archives = Archive.MR_executeFetchRequest(fetchRequest!) as [Archive]
         
-        let groupedArchives = grouppingArchives(archives)
-        
-        self.sections = groupedArchives.sections
-        self.archives = groupedArchives.grouped
+        refreshArhives(archives, byTableStyle: self.tableStyle)
         
         println("loaded archives count: \(archives.count)")
         
     }
     
-    func grouppingArchives(archives: [Archive]) -> (sections: [String], grouped: [[Archive]]) {
+        
+    private func refreshArhives(archives: [Archive], byTableStyle tableStyle: TableStyle) {
+        
+        var groupFunction: (Archive) -> String
+        
+        switch tableStyle {
+        case .Grouped:
+            switch self.currentStatus {
+            case .NotSet:
+                groupFunction = { archive in
+                    return archive.message.senderDate.dateStringWithFormat("MMM d")
+                }
+            default:
+                groupFunction = { archive in
+                    return archive.archivedAt.dateStringWithFormat("MMM d")
+                }
+
+                
+            }
+        case .Simple:
+            groupFunction = { archive in
+                return ""
+            }
+        }
+        
+        let groupedArchives = grouppingArchives(archives, groupFunction)
+        self.sections = groupedArchives.sections
+        self.archives = groupedArchives.grouped
+        
+        self.tableView.reloadData()
+    }
+    
+    private func grouppingArchives(archives: [Archive], groupFunction: (Archive) -> String) -> (sections: [String], grouped: [[Archive]]) {
         var grouped = [[Archive]]()
         var sections = [String]()
         
         for archive in archives {
-            let sent = archive.message.senderDate.dateStringWithFormat("MMM d")
             
+            let sent = groupFunction(archive)
             
             if( !contains(sections, sent) ) {
                 sections.append(sent)
@@ -193,9 +251,10 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
                 
             }
         }
-
+        
         return (sections, grouped)
     }
+
     
     // MARK: refreshControl 
     
@@ -233,6 +292,31 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - SegmentControl Actions
+    
+    @IBAction func segmentControlDidChange(sender: UISegmentedControl) {
+        
+        var groupMethod: (Archive) -> String
+        switch sender.selectedSegmentIndex {
+        case 0:
+            self.tableStyle = .Simple
+        case 1:
+            self.tableStyle = .Grouped
+        default:
+            return;
+        }
+        
+        var archives = [Archive]()
+        for items in self.archives {
+            for item in items {
+                archives.append(item)
+            }
+        }
+        
+        refreshArhives(archives, byTableStyle: self.tableStyle)
+        
+    }
+    
     
     // MARK: - Segues
     
@@ -253,7 +337,6 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        println("numberOfRowsInSection: \(section)" )
         return archives[section].count
     }
     
@@ -277,13 +360,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func configureCell(cell: SBGestureTableViewCell, atIndexPath indexPath: NSIndexPath ) {
-        
-        let size = CGSizeMake(30, 30)
-        
-        cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkIcon.imageWithSize(size), color: greenColor, fraction: 0.3, didTriggerBlock: archiveBlock)
-//        cell.secondLeftAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.6, didTriggerBlock: removeCellBlock)
-        cell.firstRightAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.3, didTriggerBlock: rejectBlock)
-//        cell.secondRightAction = SBGestureTableViewCellAction(icon: clockIcon.imageWithSize(size), color: brownColor, fraction: 0.6, didTriggerBlock: removeCellBlock)
+
+        configureActionsForCell(cell)
         
         let archive = archives[indexPath.section][indexPath.row]
         
@@ -301,7 +379,39 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    func configureMessageCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
+    private func configureActionsForCell(cell: SBGestureTableViewCell) {
+        
+        let size = CGSizeMake(30, 30)
+        
+        switch (currentStatus) {
+        case .Archived:
+            
+            //reject
+            cell.firstLeftAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.3, didTriggerBlock: rejectBlock)
+            
+            //not set
+            cell.firstRightAction = SBGestureTableViewCellAction(icon: composeIcon.imageWithSize(size), color: brownColor, fraction: 0.3, didTriggerBlock: notSetBlock)
+            
+        case .Rejected:
+            
+            //archive
+            cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkIcon.imageWithSize(size), color: greenColor, fraction: 0.3, didTriggerBlock: archiveBlock)
+            
+            //not set
+            cell.firstRightAction = SBGestureTableViewCellAction(icon: composeIcon.imageWithSize(size), color: brownColor, fraction: 0.3, didTriggerBlock: notSetBlock)
+            
+        case .NotSet:
+            
+            //archive
+            cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkIcon.imageWithSize(size), color: greenColor, fraction: 0.3, didTriggerBlock: archiveBlock)
+            
+            //reject
+            cell.firstRightAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.3, didTriggerBlock: rejectBlock)
+        }
+
+    }
+    
+    private func configureMessageCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
         
         let messageCell = cell as MessageCell
         
@@ -311,7 +421,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         messageCell.senderLabel?.text = "Test@gmail.com"
     }
     
-    func configureTimelineCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
+    private func configureTimelineCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
         
         let timelineCell = cell as TimelineCell2
         
@@ -333,7 +443,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    func configureArchivedCell(cell: SBGestureTableViewCell, withArchiveItem archived: Archive) {
+    private func configureArchivedCell(cell: SBGestureTableViewCell, withArchiveItem archived: Archive) {
         
         func getFormattedCompany() -> String {
             let company: Company? = archived.company
@@ -364,14 +474,30 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let  headerCell = tableView.dequeueReusableCellWithIdentifier("TimelineHeaderCell") as TimelineHeaderCell
+        var identifier = ""
+        switch self.currentStatus {
+        case .NotSet:
+            identifier = "TimelineHeaderCell"
+        default:
+            identifier = "MessageHeaderCell"
+        }
+        let  headerCell = tableView.dequeueReusableCellWithIdentifier(identifier) as TimelineHeaderCell
         headerCell.backgroundColor = UIColor.whiteColor()
         headerCell.headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)?
         return headerCell
     }
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let  footerView = tableView.dequeueReusableCellWithIdentifier("TimelineFooterCell") as UITableViewCell
+        
+        var identifier = ""
+        switch self.currentStatus {
+        case .NotSet:
+            identifier = "TimelineFooterCell"
+        default:
+            identifier = "MessageFooterCell"
+        }
+        
+        let  footerView = tableView.dequeueReusableCellWithIdentifier(identifier) as UITableViewCell
         footerView.backgroundColor = UIColor.whiteColor()
         return footerView
     }
