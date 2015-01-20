@@ -19,7 +19,9 @@ enum ArchiveStatus: Int  {
 
 class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController {
     
-    var archives = [Archive]()
+    var archives = [[Archive]]()
+    var sections = [String]()
+    
     var currentStatus: ArchiveStatus = .NotSet
     
     @IBOutlet weak var sbgTableView: SBGestureTableView!
@@ -62,6 +64,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         setupIcons()
         
+        
+        
         archiveBlock = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
             
             let indexPath = tableView.indexPathForCell(cell)
@@ -71,9 +75,15 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             self.setArchiveStatus(ArchiveStatus.Archived, atIndexPath: indexPath!)
             
             //remove cell
-            self.archives.removeAtIndex(indexPath!.row)
+            self.removeItemAtIndexPath(indexPath!)
             tableView.removeCell(cell, duration: 0.3, completion: nil)
-
+            
+//            if self.archives[indexPath!.section].isEmpty {
+//                //remove section
+//                self.archives.removeAtIndex(indexPath!.section)
+//                tableView.deleteSections(NSIndexSet(index: indexPath!.section), withRowAnimation: .Fade)
+//                
+//            }
         }
 
         rejectBlock = {(tableView: SBGestureTableView, cell: SBGestureTableViewCell) -> Void in
@@ -85,9 +95,16 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             self.setArchiveStatus(ArchiveStatus.Rejected, atIndexPath: indexPath!)
             
             //remove cell
-            self.archives.removeAtIndex(indexPath!.row)
+            self.removeItemAtIndexPath(indexPath!)
             tableView.removeCell(cell, duration: 0.3, completion: nil)
 
+//            if self.archives[indexPath!.section].isEmpty {
+//                //remove section
+//                self.archives.removeAtIndex(indexPath!.section)
+//                tableView.deleteSections(NSIndexSet(index: indexPath!.section), withRowAnimation: .Fade)
+//                
+//            }
+            
         }
         
         fetchArchives()
@@ -97,10 +114,18 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         initRefreshControl()
     }
     
+    func removeItemAtIndexPath(indexPath: NSIndexPath) {
+        var items = self.archives[indexPath.section]
+        if items.count > 0 {
+            items.removeAtIndex(indexPath.row)
+            self.archives[indexPath.section] = items
+        }
+    }
+    
     
     func setArchiveStatus(status: ArchiveStatus, atIndexPath indexPath: NSIndexPath ) {
         
-        let archive = archives[indexPath.row]
+        let archive = archives[indexPath.section][indexPath.row]
         archive.archiveStatus = status.rawValue
         NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
         
@@ -132,9 +157,44 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         let predicate = NSPredicate(format: "archiveStatus == %d", currentStatus.rawValue)
         fetchRequest.predicate = predicate
         
-        archives = Archive.MR_executeFetchRequest(fetchRequest!) as [Archive]
+        var archives = Archive.MR_executeFetchRequest(fetchRequest!) as [Archive]
+        
+        let groupedArchives = grouppingArchives(archives)
+        
+        self.sections = groupedArchives.sections
+        self.archives = groupedArchives.grouped
+        
         println("loaded archives count: \(archives.count)")
         
+    }
+    
+    func grouppingArchives(archives: [Archive]) -> (sections: [String], grouped: [[Archive]]) {
+        var grouped = [[Archive]]()
+        var sections = [String]()
+        
+        for archive in archives {
+            let sent = archive.message.senderDate.dateStringWithFormat("MMM d")
+            
+            
+            if( !contains(sections, sent) ) {
+                sections.append(sent)
+            }
+            
+            if let index = find(sections, sent) {
+                
+                var items = [Archive]()
+                if index < grouped.count {
+                    items = grouped[index]
+                } else {
+                    grouped.insert([Archive](), atIndex: index)
+                }
+                items.append(archive)
+                grouped[index] = items
+                
+            }
+        }
+
+        return (sections, grouped)
     }
     
     // MARK: refreshControl 
@@ -189,11 +249,12 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - Table View
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return archives.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return archives.count
+        println("numberOfRowsInSection: \(section)" )
+        return archives[section].count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -224,7 +285,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         cell.firstRightAction = SBGestureTableViewCellAction(icon: composeIcon.imageWithSize(size), color: yellowColor, fraction: 0.3, didTriggerBlock: rejectBlock)
 //        cell.secondRightAction = SBGestureTableViewCellAction(icon: clockIcon.imageWithSize(size), color: brownColor, fraction: 0.6, didTriggerBlock: removeCellBlock)
         
-        let archive = archives[indexPath.row]
+        let archive = archives[indexPath.section][indexPath.row]
         
         switch (currentStatus) {
         case .Archived:
@@ -287,6 +348,14 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         let message = archived.message;
         archivedCell.subjectLabel?.text = message.subject;
     }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.sections[section]
+    }
+    
+//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        
+//    }
     
     // MARK: MenuVIewController
     

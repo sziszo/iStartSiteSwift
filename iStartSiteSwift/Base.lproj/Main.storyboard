@@ -9,10 +9,10 @@
         <scene sceneID="NHZ-jF-8id">
             <objects>
                 <tableViewController storyboardIdentifier="MailboxVC" id="ch5-Lp-bGa" customClass="MailboxVC" customModule="iStartSiteSwift" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="t7L-7F-auL" customClass="SBGestureTableView" customModule="iStartSiteSwift" customModuleProvider="target">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="t7L-7F-auL" customClass="SBGestureTableView" customModule="iStartSiteSwift" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" rowHeight="80" id="bLO-N3-hXC" customClass="MessageCell" customModule="iStartSiteSwift" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>

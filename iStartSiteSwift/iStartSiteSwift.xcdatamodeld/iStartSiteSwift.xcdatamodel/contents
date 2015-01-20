@@ -127,18 +127,18 @@
         <relationship name="person" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="Person" inverseName="user" inverseEntity="Person" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Person" positionX="2014" positionY="1136" width="128" height="133"/>
-        <element name="MailboxFolder" positionX="1663" positionY="162" width="128" height="88"/>
-        <element name="Contact" positionX="1584" positionY="819" width="128" height="133"/>
-        <element name="User" positionX="1609" positionY="1157" width="128" height="148"/>
-        <element name="Archive" positionX="1809" positionY="324" width="128" height="178"/>
-        <element name="Mailbox" positionX="1881" positionY="135" width="128" height="163"/>
-        <element name="ContactEmail" positionX="1575" positionY="1017" width="128" height="73"/>
-        <element name="Project" positionX="1800" positionY="576" width="128" height="238"/>
-        <element name="MailboxMessage" positionX="1557" positionY="324" width="128" height="163"/>
-        <element name="Company" positionX="2070" positionY="585" width="128" height="283"/>
+        <element name="Archive" positionX="1809" positionY="335" width="128" height="178"/>
         <element name="ArchiveGroup" positionX="2059" positionY="356" width="128" height="103"/>
-        <element name="MailboxContact" positionX="1564" positionY="594" width="128" height="118"/>
+        <element name="Company" positionX="2070" positionY="585" width="128" height="283"/>
+        <element name="Contact" positionX="1584" positionY="819" width="128" height="133"/>
+        <element name="ContactEmail" positionX="1575" positionY="1017" width="128" height="73"/>
         <element name="Employee" positionX="2095" positionY="945" width="128" height="118"/>
+        <element name="Mailbox" positionX="1881" positionY="135" width="128" height="163"/>
+        <element name="MailboxContact" positionX="1564" positionY="594" width="128" height="118"/>
+        <element name="MailboxFolder" positionX="1663" positionY="162" width="128" height="88"/>
+        <element name="MailboxMessage" positionX="1557" positionY="324" width="128" height="163"/>
+        <element name="Person" positionX="2014" positionY="1136" width="128" height="133"/>
+        <element name="Project" positionX="1800" positionY="576" width="128" height="238"/>
+        <element name="User" positionX="1609" positionY="1157" width="128" height="148"/>
     </elements>
 </model>
