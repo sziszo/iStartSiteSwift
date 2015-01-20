@@ -51,12 +51,16 @@ extension MailboxMessage {
 extension MailboxContact {
     
     func toString() -> String {
-        var name: String? = self.displayName 
+        var name = self.displayName
         if name == nil || name!.isEmpty {
             name = self.emailAddress
         }
         return name!
-
+    }
+    
+    var monogram: String {
+        var monogram = self.toString()
+        return monogram.substringToIndex(monogram.startIndex.successor()).capitalizedString
     }
 }
 

@@ -253,7 +253,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println("numberOfRowsInSection: \(section)" )
+//        println("numberOfRowsInSection: \(section)" )
         return archives[section].count
     }
     
@@ -315,7 +315,17 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         let timelineCell = cell as TimelineCell2
         
-        timelineCell.profileImageView.image = UIImage(named: "person")
+        
+        if let senders = message?.senders {
+            for contact in senders.allObjects as [MailboxContact] {
+                let monogram = contact.monogram
+                timelineCell.profileImageView.image = ImageUtils.imageFromText(monogram)
+                break;
+            }
+        } else {            
+            timelineCell.profileImageView.image = UIImage(named: "person")
+        }
+        
         timelineCell.subjectLabel.text = message?.subject
         timelineCell.dateLabel.text = message?.senderDate.dateStringWithFormat("MMM d")
         timelineCell.nameLabel?.text = "Test@gmail.com"
@@ -356,16 +366,13 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let  headerCell = tableView.dequeueReusableCellWithIdentifier("TimelineHeaderCell") as TimelineHeaderCell
         headerCell.backgroundColor = UIColor.whiteColor()
-        
         headerCell.headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)?
-        
         return headerCell
     }
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let  footerView = tableView.dequeueReusableCellWithIdentifier("TimelineFooterCell") as UITableViewCell
         footerView.backgroundColor = UIColor.whiteColor()
-        
         return footerView
     }
     
@@ -433,7 +440,7 @@ class TimelineCell2 : SBGestureTableViewCell {
         let clockIcon = FAKIonIcons.iosClockOutlineIconWithSize(15);
         dateImageView.image = clockIcon.imageWithSize(size2)
         
-        profileImageView.layer.cornerRadius = 30
+        profileImageView.layer.cornerRadius = 27
         
         nameLabel?.font = UIFont(name: "Avenir-Book", size: 16)
         nameLabel?.textColor = UIColor.blackColor()

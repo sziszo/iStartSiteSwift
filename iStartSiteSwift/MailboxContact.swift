@@ -12,7 +12,7 @@ import CoreData
 @objc(MailboxContact)
 class MailboxContact: NSManagedObject {
 
-    @NSManaged var displayName: String
+    @NSManaged var displayName: String?
     @NSManaged var emailAddress: String
     @NSManaged var contact: Contact
     @NSManaged var receivedMessages: NSSet
