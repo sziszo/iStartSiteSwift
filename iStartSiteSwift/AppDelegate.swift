@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          
         setupParse()
         
+        BipoTestDataManager.uploadTestData()
+        
         //        let containerViewController = ContainerViewController()
         //
         //        window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -105,6 +107,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait();
+        
+        
         
     }
 

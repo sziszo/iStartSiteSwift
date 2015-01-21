@@ -11,7 +11,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var txtUserName: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     
-    let loginService: LoginService = PLoginService()
+    let loginService: LoginService = LoginServiceFactory.defaultLoginService()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -42,6 +42,10 @@
 		954C1EA51A618EC0004A6C15 /* SBGestureTableViewCellSideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1EA11A618EC0004A6C15 /* SBGestureTableViewCellSideView.swift */; };
 		954C1EA91A61BC89004A6C15 /* MailboxVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1EA81A61BC89004A6C15 /* MailboxVC.swift */; };
 		95C197521A6E84AD0060B0AC /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197511A6E84AD0060B0AC /* ImageUtils.swift */; };
+		95C197561A6F18C20060B0AC /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197551A6F18C20060B0AC /* TaskManager.swift */; };
+		95C197591A6F1F350060B0AC /* PCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197581A6F1F350060B0AC /* PCompany.swift */; };
+		95C1975B1A6F1FEB0060B0AC /* BipoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C1975A1A6F1FEB0060B0AC /* BipoManager.swift */; };
+		95C1975D1A6F25EA0060B0AC /* PEmployee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C1975C1A6F25EA0060B0AC /* PEmployee.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +101,10 @@
 		954C1EA11A618EC0004A6C15 /* SBGestureTableViewCellSideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBGestureTableViewCellSideView.swift; sourceTree = "<group>"; };
 		954C1EA81A61BC89004A6C15 /* MailboxVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailboxVC.swift; sourceTree = "<group>"; };
 		95C197511A6E84AD0060B0AC /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
+		95C197551A6F18C20060B0AC /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
+		95C197581A6F1F350060B0AC /* PCompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCompany.swift; sourceTree = "<group>"; };
+		95C1975A1A6F1FEB0060B0AC /* BipoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BipoManager.swift; sourceTree = "<group>"; };
+		95C1975C1A6F25EA0060B0AC /* PEmployee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEmployee.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +255,8 @@
 				954C1E751A618A5D004A6C15 /* ArchiveGroup.swift */,
 				954C1E731A618A5D004A6C15 /* ContactEmail.swift */,
 				954C1E711A618A5C004A6C15 /* Contact.swift */,
+				95C197581A6F1F350060B0AC /* PCompany.swift */,
+				95C1975C1A6F25EA0060B0AC /* PEmployee.swift */,
 			);
 			name = bipo;
 			sourceTree = "<group>";
@@ -263,6 +273,8 @@
 				9531F1241A69E5E9006DFACA /* LoginVC.swift */,
 				9531F12A1A6AA142006DFACA /* LoginService.swift */,
 				9531F12C1A6B4B94006DFACA /* Settings.swift */,
+				95C197551A6F18C20060B0AC /* TaskManager.swift */,
+				95C1975A1A6F1FEB0060B0AC /* BipoManager.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -419,6 +431,7 @@
 				954C1E6C1A6189D1004A6C15 /* MailboxMessage.swift in Sources */,
 				950403061A64A28D00F0B062 /* Categories.swift in Sources */,
 				954C1E741A618A5D004A6C15 /* ContactEmail.swift in Sources */,
+				95C1975B1A6F1FEB0060B0AC /* BipoManager.swift in Sources */,
 				954C1E701A6189D1004A6C15 /* Mailbox.swift in Sources */,
 				9504030A1A68788700F0B062 /* Timer.swift in Sources */,
 				954C1E781A618A5D004A6C15 /* Person.swift in Sources */,
@@ -429,13 +442,16 @@
 				954C1EA21A618EC0004A6C15 /* SBGestureTableView.swift in Sources */,
 				954C1E801A618A5D004A6C15 /* Company.swift in Sources */,
 				954C1E821A618A5D004A6C15 /* Employee.swift in Sources */,
+				95C197591A6F1F350060B0AC /* PCompany.swift in Sources */,
 				9531F12D1A6B4B94006DFACA /* Settings.swift in Sources */,
+				95C197561A6F18C20060B0AC /* TaskManager.swift in Sources */,
 				950403081A65E84F00F0B062 /* MailboxManager.swift in Sources */,
 				954C1EA51A618EC0004A6C15 /* SBGestureTableViewCellSideView.swift in Sources */,
 				954C1E6A1A6189D0004A6C15 /* MailboxFolder.swift in Sources */,
 				9531F11F1A688900006DFACA /* ContainerViewController.swift in Sources */,
 				954C1E7A1A618A5D004A6C15 /* User.swift in Sources */,
 				954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */,
+				95C1975D1A6F25EA0060B0AC /* PEmployee.swift in Sources */,
 				95C197521A6E84AD0060B0AC /* ImageUtils.swift in Sources */,
 				9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */,
 				9531F12B1A6AA142006DFACA /* LoginService.swift in Sources */,

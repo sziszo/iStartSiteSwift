@@ -273,7 +273,12 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         let mailboxManager = MailboxManager(account: AppDelegate.sharedAppDelegate().getTestAccount())
         
         mailboxManager.fetchMessages() {
-            println("fetching  is finished")
+            println("mailbox fetching  is finished")
+        }
+        
+        let bipoManager = BipoManagerFactory.defaultManager()
+        bipoManager.refresh() {
+            println("bipo refreshing is finished")
         }
 
         Timer.start(3, repeats: false) {

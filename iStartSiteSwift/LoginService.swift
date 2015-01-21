@@ -13,7 +13,13 @@ protocol LoginService {
     func registerUser(username: String, withPassword passsword: String, completion: (User?, NSError!) -> ())
 }
 
-class PLoginService: LoginService {
+class LoginServiceFactory {
+    class func defaultLoginService() -> LoginService {
+        return PLoginService()
+    }
+}
+
+private class PLoginService: LoginService {
     
     init() {
     }
