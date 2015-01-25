@@ -22,17 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         MagicalRecord.setupCoreDataStack()
         
-        setupTestData()
-         
         setupParse()
         
-        BipoTestDataManager.uploadTestData()
-        
-        //        let containerViewController = ContainerViewController()
-        //
-        //        window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        //        window!.rootViewController = containerViewController
-        //        window!.makeKeyAndVisible()
+//        setupTestData()
+//        BipoTestDataManager.uploadTestData()
         
                 
         return true

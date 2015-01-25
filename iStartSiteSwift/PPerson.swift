@@ -1,22 +1,22 @@
 //
-//  PEmployee.swift
+//  PPerson.swift
 //  iStartSiteSwift
 //
-//  Created by Szilard Antal on 2015. 01. 21..
+//  Created by Szilard Antal on 2015. 01. 23..
 //  Copyright (c) 2015. Szilard Antal. All rights reserved.
 //
 
 import Foundation
 
-class PEmployee: PObject {
+
+class PPerson: PObject {
     
-    @NSManaged var employeeId: Int
-    @NSManaged var companyId: Int
     @NSManaged var personId: Int
-    
+    @NSManaged var name1: String
+    @NSManaged var name2: String
     
     override class func parseClassName() -> String! {
-        return "PEmployee"
+        return "PPerson"
     }
     
     override class func load() {

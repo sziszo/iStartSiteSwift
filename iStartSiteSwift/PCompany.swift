@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PCompany: PFObject, PFSubclassing {
+class PCompany: PObject {
     
     @NSManaged var companyId: Int
     @NSManaged var history: NSDate
@@ -20,9 +20,7 @@ class PCompany: PFObject, PFSubclassing {
     @NSManaged var creatorId: String
     @NSManaged var modifierId: String
     
-    
-    
-    class func parseClassName() -> String! {
+    override class func parseClassName() -> String! {
         return "PCompany"
     }
     
@@ -30,4 +28,6 @@ class PCompany: PFObject, PFSubclassing {
         super.load()
         self.registerSubclass()
     }
+
+    
 }

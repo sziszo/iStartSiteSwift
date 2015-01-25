@@ -70,19 +70,25 @@ extension Company {
         var toString = ""
         
         if (!self.name1.isEmpty) {
-            toString += "\(self.name1) "
+            toString += self.name1
         }
         
-        if (!self.name2.isEmpty) {
-            toString += "\(self.name2) "
+        if let name2 = self.name2 {
+            if !name2.isEmpty {
+                toString += name2
+            }
         }
         
-        if (!self.name3.isEmpty) {
-            toString += "\(self.name3) "
+        if let name3 = self.name3 {
+            if !name3.isEmpty {
+                toString += name3
+            }
         }
         
-        if (!self.name4.isEmpty) {
-            toString += "\(self.name4)"
+        if let name4 = self.name4 {
+            if !name4.isEmpty {
+                toString += name4
+            }
         }
         
         if (toString.isEmpty) {

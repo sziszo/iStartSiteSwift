@@ -22,7 +22,7 @@ enum TableStyle {
 }
 
 
-class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController {
+class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController, ArchiveVCDelegate {
     
     private var archives = [[Archive]]()
     private var sections = [String]()
@@ -81,8 +81,13 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             //update ArchiveStatus
             self.setArchiveStatus(ArchiveStatus.Archived, atIndexPath: indexPath!)
             
+            
+            let archiveItem = self.archives[indexPath!.section][indexPath!.row]
+            
             //remove cell
             self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
+            
+            self.showArchiveVC(archiveItem)
             
         }
 
@@ -131,6 +136,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             }
             
             tableView.reloadData()
+            
         }
     }
     
@@ -142,10 +148,35 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    private func showArchiveVC(archiveItem: Archive) {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("archiveNavVC") as UINavigationController;
+        let archiveVC = vc.topViewController as ArchiveVC
+        
+        
+        
+        let formSheetController = MZFormSheetController(viewController: vc)
+        formSheetController.shouldDismissOnBackgroundViewTap = true
+        self.mz_presentFormSheetController(formSheetController, animated: true) { formSheetController in
+            println("form sheet is displayed!")
+            if let nav = formSheetController.presentedFSViewController as? UINavigationController {
+                
+                if let archiveVC = nav.topViewController as? ArchiveVC {
+                    archiveVC.archiveItem = archiveItem
+                    archiveVC.delegate = self
+                }
+            }
+        }
+        
+        
+    }
     
     private func setArchiveStatus(status: ArchiveStatus, atIndexPath indexPath: NSIndexPath ) {
-        
         let archive = archives[indexPath.section][indexPath.row]
+        setArchive(archive, status: status)
+    }
+    
+    private func setArchive(archive: Archive, status: ArchiveStatus ) {
+        
         archive.archiveStatus = status.rawValue
         archive.archivedAt = NSDate()
         
@@ -162,12 +193,15 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     func insertNewObject(sender: AnyObject) {
         
+        /*
         let archive = Archive.MR_createEntity() as Archive;
         archive.archiveStatus = ArchiveStatus.NotSet.rawValue
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
         
         fetchArchives()
         tableView.reloadData()
+        */
+        
     }
     
     private func fetchArchives() {
@@ -529,6 +563,22 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func toggleMenu(sender: AnyObject) {
         delegate?.toggleLeftPanel?()
+    }
+    
+    // MARK: - ArchiveVCDelegate 
+    
+    func archivingDidAccepted(archive: Archive) {
+        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+    }
+    
+    func archivingDidCancel(archive: Archive?) {
+        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { formSheetController in
+            
+            if archive != nil {
+                self.setArchive(archive!, status: self.currentStatus)
+                self.fetchArchives()            }
+            
+        })
     }
 }
 

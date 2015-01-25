@@ -17,6 +17,6 @@ class Person: NSManagedObject {
     @NSManaged var personId: NSNumber
     @NSManaged var contacts: NSSet
     @NSManaged var employes: NSSet
-    @NSManaged var user: User
+    @NSManaged var user: User?
 
 }

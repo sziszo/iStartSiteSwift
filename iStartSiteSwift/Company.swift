@@ -17,9 +17,9 @@ class Company: NSManagedObject {
     @NSManaged var history: NSDate
     @NSManaged var modified: NSDate
     @NSManaged var name1: String
-    @NSManaged var name2: String
-    @NSManaged var name3: String
-    @NSManaged var name4: String
+    @NSManaged var name2: String?
+    @NSManaged var name3: String?
+    @NSManaged var name4: String?
     @NSManaged var shortName: String
     @NSManaged var archiveGroups: NSSet
     @NSManaged var archivingMessages: NSSet
