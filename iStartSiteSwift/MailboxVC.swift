@@ -471,15 +471,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
 //        messageCell.contentLabel?.text = message?.content
         messageCell.subjectLabel?.text = message?.subject
         messageCell.senderDateLabel?.text = message?.senderDate.dateStringWithFormat("MMM d")
-        
-        var senders = ""
-        for sender in message?.senders.allObjects as [MailboxContact] {
-            if !senders.isEmpty {
-                senders += ", "
-            }
-            senders += sender.toString()
-        }
-        messageCell.senderLabel?.text = senders
+        messageCell.senderLabel?.text = message?.toStringSenders()
     }
     
     private func configureTimelineCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
@@ -499,8 +491,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         timelineCell.subjectLabel.text = message?.subject
         timelineCell.dateLabel.text = message?.senderDate.dateStringWithFormat("MMM d")
-        timelineCell.nameLabel?.text = "Test@gmail.com"
-//        timelineCell.contentLabel?.text = "Checking out of the hotel today. It was really fun to see everyone and catch up. We should have more conferences like this so we can share ideas."
+        timelineCell.nameLabel?.text = message?.toStringSenders()
         
         if let content = message?.content {
             var length = countElements(content)
