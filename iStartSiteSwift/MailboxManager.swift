@@ -123,7 +123,7 @@ class MailboxManager {
                             
                         } else {
                             
-                            println("message has already been downloaded! uid = \(mail.uid)")
+//                            println("message has already been downloaded! uid = \(mail.uid)")
                             
                         }
                         

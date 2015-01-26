@@ -11,7 +11,6 @@
 		950403061A64A28D00F0B062 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403051A64A28D00F0B062 /* Categories.swift */; };
 		950403081A65E84F00F0B062 /* MailboxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403071A65E84F00F0B062 /* MailboxManager.swift */; };
 		9504030A1A68788700F0B062 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403091A68788700F0B062 /* Timer.swift */; };
-		9504392C1A7050D900AEC999 /* ArchiveEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9504392B1A7050D900AEC999 /* ArchiveEmailVC.swift */; };
 		9504392E1A706F4100AEC999 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9504392D1A706F4100AEC999 /* ReportVC.swift */; };
 		950439621A716B3500AEC999 /* ArchiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950439611A716B3500AEC999 /* ArchiveVC.swift */; };
 		9531F11F1A688900006DFACA /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F11E1A688900006DFACA /* ContainerViewController.swift */; };
@@ -72,7 +71,6 @@
 		950403051A64A28D00F0B062 /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		950403071A65E84F00F0B062 /* MailboxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailboxManager.swift; sourceTree = "<group>"; };
 		950403091A68788700F0B062 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
-		9504392B1A7050D900AEC999 /* ArchiveEmailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveEmailVC.swift; sourceTree = "<group>"; };
 		9504392D1A706F4100AEC999 /* ReportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		950439611A716B3500AEC999 /* ArchiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveVC.swift; sourceTree = "<group>"; };
 		9531F11E1A688900006DFACA /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -288,7 +286,6 @@
 				9531F12C1A6B4B94006DFACA /* Settings.swift */,
 				95C197551A6F18C20060B0AC /* TaskManager.swift */,
 				95C1975A1A6F1FEB0060B0AC /* BipoManager.swift */,
-				9504392B1A7050D900AEC999 /* ArchiveEmailVC.swift */,
 				9504392D1A706F4100AEC999 /* ReportVC.swift */,
 				950439611A716B3500AEC999 /* ArchiveVC.swift */,
 			);
@@ -460,7 +457,6 @@
 				955EAC2D1A73027600BBA19A /* PUser.swift in Sources */,
 				954C1E6C1A6189D1004A6C15 /* MailboxMessage.swift in Sources */,
 				950403061A64A28D00F0B062 /* Categories.swift in Sources */,
-				9504392C1A7050D900AEC999 /* ArchiveEmailVC.swift in Sources */,
 				954C1E741A618A5D004A6C15 /* ContactEmail.swift in Sources */,
 				955EAC331A74604C00BBA19A /* PObject.swift in Sources */,
 				95C1975B1A6F1FEB0060B0AC /* BipoManager.swift in Sources */,

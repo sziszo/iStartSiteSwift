@@ -8,6 +8,17 @@
 
 import UIKit
 
+enum ArchiveInfoCategory: Int {
+    case Company = 0, Person, Order
+}
+
+struct ArchiveInfo {
+    var category: ArchiveInfoCategory
+    var label = ""
+    var value = ""
+    var valid = false;
+}
+
 protocol ArchiveVCDelegate {
     
     func archivingDidAccepted(archive: Archive)
@@ -17,6 +28,15 @@ protocol ArchiveVCDelegate {
 
 class ArchiveVC: UITableViewController {
     
+    struct Constants {
+        
+        struct TableViewCell {
+            static let name = "Cell"
+        }
+        
+        static let undefinedValue = "Undefined"
+    }
+    
     var archiveItem: Archive?
     
     private var items = [ArchiveInfo]();
@@ -24,12 +44,41 @@ class ArchiveVC: UITableViewController {
     
     var delegate: ArchiveVCDelegate?
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        items = [ArchiveInfo(category: ArchiveInfoCategory.Company, label: "Company"),
-            ArchiveInfo(category: ArchiveInfoCategory.Person, label: "Person"),
-            ArchiveInfo(category: ArchiveInfoCategory.Order, label: "Order")]
+        
+        var companyValue = Constants.undefinedValue
+        var personValue = Constants.undefinedValue
+        var orderValue = Constants.undefinedValue
+        if self.archiveItem != nil {
+            
+            if let company = archiveItem!.company {
+                companyValue = company.formattedCompanyName()
+            }
+            if companyValue.isEmpty {
+                companyValue = Constants.undefinedValue
+            }
+            
+            if let employee = archiveItem!.employee {
+                personValue = employee.person.formattedPersonName()
+            }
+            if personValue.isEmpty {
+                personValue = Constants.undefinedValue
+            }
+            
+            //TODO fill orderValue
+        }
+        
+        
+        let companyRow = ArchiveInfo(category: ArchiveInfoCategory.Company, label: "Company", value: companyValue, valid: self.validateCompany())
+        let personRow = ArchiveInfo(category: ArchiveInfoCategory.Person, label: "Person", value: personValue, valid: self.validatePerson())
+        let orderRow = ArchiveInfo(category: ArchiveInfoCategory.Order, label: "Order", value: orderValue, valid: true)
+        
+        items = [companyRow, personRow, orderRow]
+        
         
         self.tableView.reloadData()
         
@@ -56,12 +105,20 @@ class ArchiveVC: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(Constants.TableViewCell.name, forIndexPath: indexPath) as UITableViewCell
         
+        let item = items[indexPath.row]
+        println("item-label: \(item.label), item-value: \(item.value)")
+        cell.textLabel?.text = item.label
+        cell.detailTextLabel?.text = item.value
         
-        cell.textLabel?.text = items[indexPath.row].label
-        //        cell.detailTextLabel?.text = items[indexPath.row].value
-        cell.detailTextLabel?.text = "Subtitle #\(indexPath.row)"
+        if !item.valid {
+            cell.backgroundColor = UIColor.orangeColor()
+            cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        } else {
+            cell.backgroundColor = UIColor.whiteColor()
+            cell.detailTextLabel?.textColor = UIColor.grayColor()
+        }
         
         cell.accessoryView = UIImageView(image: searchIcon.imageWithSize(CGSize(width: 30, height: 30)))
         cell.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
@@ -79,17 +136,42 @@ class ArchiveVC: UITableViewController {
             let reportVC = segue.destinationViewController as ReportVC
             
             let indexPath = self.tableView.indexPathForSelectedRow()!
-            let destinationTitle = self.items[indexPath.row].label
+            let selectedItem = self.items[indexPath.row]
+            
+            //title
+            let destinationTitle = selectedItem.label
             reportVC.title = destinationTitle
+            
+            //category
+            let category = selectedItem.category
+            reportVC.category = category
+            
 //            reportVC.historyItems = 
             
             var reportItems = [ReportItem]()
-            let companies = Company.MR_findAll() as [Company]
-            for company in companies {
-                reportItems += [ReportItem(id: company.companyId.integerValue, name: company.formattedCompanyName())]
+            switch category {
+            case .Company:
+                let companies = Company.MR_findAll() as [Company]
+                for company in companies {
+                    println("\(company.companyId.integerValue) \(company.formattedCompanyName())")
+                    
+                    reportItems += [ReportItem(id: company.companyId.integerValue, name: company.formattedCompanyName())]
+                }
+            case .Person:
+                if let company = archiveItem?.company {
+                    println("\(company.companyId.integerValue) \(company.formattedCompanyName())")
+                    let employees = Employee.MR_findByAttribute("company", withValue: company) as [Employee]
+                    for employee in employees {
+                        reportItems += [ReportItem(id: employee.employeeId.integerValue, name: employee.person.formattedPersonName())]
+                    }
+                }
+                
+            case .Order:
+                break;
             }
+            
             reportVC.reportItems = reportItems
-
+            reportVC.historyItems = reportItems
             
         }
     }
@@ -101,6 +183,36 @@ class ArchiveVC: UITableViewController {
             if let selectedReportItem = reportVC.selectedReportItem {
                 println("selected Item name is \(selectedReportItem.name) ")
                 
+                if let category = reportVC.category {
+                    switch category {
+                    case .Company:
+                        println("returnToArchive = \(selectedReportItem.id)")
+                        if let company = Company.MR_findFirstByAttribute("companyId", withValue: selectedReportItem.id) as? Company {
+                            self.archiveItem?.company = company
+                            
+                            self.items[ArchiveInfoCategory.Company.rawValue].value = company.formattedCompanyName()
+                            self.items[ArchiveInfoCategory.Company.rawValue].valid = self.validateCompany()
+                            self.items[ArchiveInfoCategory.Person.rawValue].valid = self.validatePerson()
+
+                            //TODO validate current Person and Order values
+                            
+                            self.tableView.reloadData()
+                            
+                        }
+                    case .Person:
+                        if let employee = Employee.MR_findFirstByAttribute("employeeId", withValue: selectedReportItem.id) as? Employee {
+                            self.archiveItem?.employee = employee
+                            self.items[ArchiveInfoCategory.Person.rawValue].value = employee.person.formattedPersonName()
+                            self.items[ArchiveInfoCategory.Person.rawValue].valid = self.validatePerson()
+                            
+                            //TODO validate current Order values
+                            
+                            self.tableView.reloadData()
+                        }
+                    default:
+                        break
+                    }
+                }
                 //TODO update the field with selected item
             }
         }
@@ -108,11 +220,44 @@ class ArchiveVC: UITableViewController {
     
     @IBAction func saveButtonTouched(sender: UIBarButtonItem) {
         if self.archiveItem != nil {
+            
+            //TODO validate cmopany, person and order
+            
+            self.archiveItem!.archivedAt = NSDate()
+            NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
+            
             delegate?.archivingDidAccepted(self.archiveItem!)
         }
     }
     
     @IBAction func cancelButtonTouched(sender: UIBarButtonItem) {
         delegate?.archivingDidCancel(self.archiveItem)
+    }
+    
+    private func validateCompany() -> Bool {
+        
+        if let item = self.archiveItem {
+            if let company = item.company {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    
+    private func validatePerson() -> Bool {
+        
+        if let item = self.archiveItem {
+            if let company = item.company {
+                if let employee = item.employee {
+                    if employee.company.companyId == company.companyId {
+                        return true
+                    }
+                }
+            }
+            
+        }
+        return false
     }
 }

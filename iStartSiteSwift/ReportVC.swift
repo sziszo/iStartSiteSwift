@@ -15,6 +15,8 @@ struct ReportItem {
 
 class ReportVC: UITableViewController, UISearchBarDelegate, UISearchDisplayDelegate {
 
+    var category: ArchiveInfoCategory!
+    
     var historyItems = [ReportItem]()
     
     var reportItems = [ReportItem]()
@@ -25,9 +27,6 @@ class ReportVC: UITableViewController, UISearchBarDelegate, UISearchDisplayDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        historyItems = [ReportItem(id: 1, name: "Elso"), ReportItem(id: 2, name: "Masodik"), ReportItem(id: 3, name: "Harmadik"), ReportItem(id: 4, name: "Negyedik")]
-        
-        reportItems = historyItems
     }
     
     // MARK - TableView

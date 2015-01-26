@@ -16,9 +16,9 @@ class Archive: NSManagedObject {
     @NSManaged var archiveId: NSNumber
     @NSManaged var archiveStatus: NSNumber
     @NSManaged var archiveGroup: ArchiveGroup
-    @NSManaged var company: Company
+    @NSManaged var company: Company?
     @NSManaged var creator: User
-    @NSManaged var employee: Employee
+    @NSManaged var employee: Employee?
     @NSManaged var message: MailboxMessage
     @NSManaged var project: Project
 

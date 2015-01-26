@@ -181,10 +181,12 @@ class PBipoManager: BipoManager {
             if let employee = findEmployee() {
                 employee.employeeId = id
                 
+//                println("searching company with id \(pemployee.companyId) for \(id) employee ")
                 if let company = Company.MR_findFirstByAttribute("companyId", withValue: pemployee.companyId, inContext: localContext) as? Company {
                     employee.company = company
                 }
                 
+//                println("searching person with id \(pemployee.personId) for \(id) employee ")
                 if let person = Person.MR_findFirstByAttribute("personId", withValue: pemployee.personId, inContext: localContext) as? Person {
                     employee.person = person
                 }
@@ -205,6 +207,7 @@ private class PObjectWorker<T: PObject> {
     func savePObjectsInBackgroundWithBlock(savePObject: (pObject: T, context: NSManagedObjectContext) -> (), complete: (String, NSError?) -> ()) {
         
         
+        
         let query = PFQuery(className: self.className)
         query.findObjectsInBackgroundWithBlock { pObjects, error in
             
@@ -214,6 +217,7 @@ private class PObjectWorker<T: PObject> {
                 
             } else {
                 
+                println("Donwloaded objects count is \(pObjects.count)")
                 MagicalRecord.saveWithBlock({ localContext in
                     
                     for pObject in pObjects as [T] {
@@ -268,14 +272,14 @@ class BipoTestDataManager {
     func createGoogle() {
         
         let cid = incrementCompanyID()
-        createCompany(self.companyId) {
+        createCompany(cid) {
             let company = PCompany()
             company.name1 = "Google Inc."
             company.name2 = ""
             company.name3 = ""
             company.name4 = ""
             company.shortName = "google"
-            company.companyId = self.companyId
+            company.companyId = cid
             company.creatorId = self.creatorId
             company.modifierId = self.modifierId
             
@@ -292,7 +296,7 @@ class BipoTestDataManager {
     func createXYZ() {
         
         let cid = incrementCompanyID()
-        createCompany(self.companyId) {
+        createCompany(cid) {
             
             let company = PCompany()
             company.name1 = "XYZ Group"
@@ -300,7 +304,7 @@ class BipoTestDataManager {
             company.name3 = ""
             company.name4 = ""
             company.shortName = "xyz"
-            company.companyId = self.companyId
+            company.companyId = cid
             company.creatorId = self.creatorId
             company.modifierId = self.modifierId
             
@@ -322,14 +326,14 @@ class BipoTestDataManager {
         
         
         let cid = incrementCompanyID()
-        createCompany(self.companyId) {
+        createCompany(cid) {
             let company = PCompany()
             company.name1 = "MyCompany Inc"
             company.name2 = ""
             company.name3 = ""
             company.name4 = ""
             company.shortName = "mycomp"
-            company.companyId = self.companyId
+            company.companyId = cid
             company.creatorId = self.creatorId
             company.modifierId = self.modifierId
             
@@ -347,14 +351,14 @@ class BipoTestDataManager {
     func createFunny() {
         
         let cid = incrementCompanyID()
-        createCompany(self.companyId) {
+        createCompany(cid) {
             let company = PCompany()
             company.name1 = "Funny Inc"
             company.name2 = ""
             company.name3 = ""
             company.name4 = ""
             company.shortName = "funny"
-            company.companyId = self.companyId
+            company.companyId = cid
             company.creatorId = self.creatorId
             company.modifierId = self.modifierId
             
@@ -371,14 +375,14 @@ class BipoTestDataManager {
     func createApple() {
         
         let cid = incrementCompanyID()
-        createCompany(self.companyId) {
+        createCompany(cid) {
             let company = PCompany()
             company.name1 = "Apple Inc."
             company.name2 = ""
             company.name3 = ""
             company.name4 = ""
             company.shortName = "apple"
-            company.companyId = self.companyId
+            company.companyId = cid
             company.creatorId = self.creatorId
             company.modifierId = self.modifierId
             
@@ -395,14 +399,14 @@ class BipoTestDataManager {
     func createCodeProject() {
         
         let cid = incrementCompanyID()
-        createCompany(self.companyId) {
+        createCompany(cid) {
             let company = PCompany()
             company.name1 = "CodeProject Inc."
             company.name2 = ""
             company.name3 = ""
             company.name4 = ""
             company.shortName = "codeProject"
-            company.companyId = self.companyId
+            company.companyId = cid
             company.creatorId = self.creatorId
             company.modifierId = self.modifierId
             

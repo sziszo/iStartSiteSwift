@@ -48,6 +48,11 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     var delegate: CenterViewControllerDelegate?
     
+    private var lastSelectedCompany: Company?
+    private var lastSelectedEmployee: Employee?
+    private var lastSelectedOrder: Project?
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -79,7 +84,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             println("Archive item at \(indexPath)")
             
             //update ArchiveStatus
-            self.setArchiveStatus(ArchiveStatus.Archived, atIndexPath: indexPath!)
+            self.setArchiveStatus(ArchiveStatus.Archived, atIndexPath: indexPath!, withDate: false)
             
             
             let archiveItem = self.archives[indexPath!.section][indexPath!.row]
@@ -98,7 +103,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
 
             //update ArchiveStatus
             self.setArchiveStatus(ArchiveStatus.Rejected, atIndexPath: indexPath!)
-            
+            NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
+
             //remove cell
             self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
             
@@ -111,7 +117,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             
             //update ArchiveStatus
             self.setArchiveStatus(ArchiveStatus.NotSet, atIndexPath: indexPath!)
-            
+            NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
+
             //remove cell
             self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
 
@@ -150,37 +157,44 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     private func showArchiveVC(archiveItem: Archive) {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("archiveNavVC") as UINavigationController;
-        let archiveVC = vc.topViewController as ArchiveVC
+        if let archiveVC = vc.topViewController as? ArchiveVC {
+            if archiveItem.company == nil {
+                if let company = self.lastSelectedCompany {
+                    archiveItem.company = company
+                }
+            }
+            if archiveItem.employee == nil {
+                if let employee = self.lastSelectedEmployee {
+                    archiveItem.employee = employee
+                }
+            }
+            archiveVC.archiveItem = archiveItem
+            archiveVC.delegate = self
+        }
+        
         
         
         
         let formSheetController = MZFormSheetController(viewController: vc)
-        formSheetController.shouldDismissOnBackgroundViewTap = true
+//        formSheetController.shouldDismissOnBackgroundViewTap = true
         self.mz_presentFormSheetController(formSheetController, animated: true) { formSheetController in
             println("form sheet is displayed!")
-            if let nav = formSheetController.presentedFSViewController as? UINavigationController {
-                
-                if let archiveVC = nav.topViewController as? ArchiveVC {
-                    archiveVC.archiveItem = archiveItem
-                    archiveVC.delegate = self
-                }
-            }
         }
         
         
     }
     
-    private func setArchiveStatus(status: ArchiveStatus, atIndexPath indexPath: NSIndexPath ) {
+    private func setArchiveStatus(status: ArchiveStatus, atIndexPath indexPath: NSIndexPath, withDate: Bool = true ) {
         let archive = archives[indexPath.section][indexPath.row]
-        setArchive(archive, status: status)
+        setArchive(archive, status: status, withDate: withDate)
     }
     
-    private func setArchive(archive: Archive, status: ArchiveStatus ) {
+    private func setArchive(archive: Archive, status: ArchiveStatus, withDate: Bool ) {
         
         archive.archiveStatus = status.rawValue
-        archive.archivedAt = NSDate()
-        
-        NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
+        if withDate {
+            archive.archivedAt = NSDate()
+        }
         
     }
     
@@ -457,7 +471,15 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
 //        messageCell.contentLabel?.text = message?.content
         messageCell.subjectLabel?.text = message?.subject
         messageCell.senderDateLabel?.text = message?.senderDate.dateStringWithFormat("MMM d")
-        messageCell.senderLabel?.text = "Test@gmail.com"
+        
+        var senders = ""
+        for sender in message?.senders.allObjects as [MailboxContact] {
+            if !senders.isEmpty {
+                senders += ", "
+            }
+            senders += sender.toString()
+        }
+        messageCell.senderLabel?.text = senders
     }
     
     private func configureTimelineCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
@@ -490,7 +512,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         }
         
         func getFormattedPerson() -> String {
-            let person: Person? = archived.employee.person
+            let person: Person? = archived.employee?.person
             return person != nil ? person!.formattedPersonName() : "Unknown person"
         }
         
@@ -567,7 +589,12 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     // MARK: - ArchiveVCDelegate 
     
+    
     func archivingDidAccepted(archive: Archive) {
+        
+        self.lastSelectedCompany = archive.company
+        self.lastSelectedEmployee = archive.employee
+                
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
     
@@ -575,8 +602,10 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { formSheetController in
             
             if archive != nil {
-                self.setArchive(archive!, status: self.currentStatus)
-                self.fetchArchives()            }
+//                NSManagedObjectContext.MR_defaultContext().undo()
+                self.setArchive(archive!, status: self.currentStatus, withDate: false)
+                self.fetchArchives()
+            }
             
         })
     }
