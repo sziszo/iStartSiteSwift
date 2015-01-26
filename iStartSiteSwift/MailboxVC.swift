@@ -468,7 +468,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         let messageCell = cell as MessageCell
         
-//        messageCell.contentLabel?.text = message?.content
+        messageCell.contentLabel?.text = message?.shortContent(size: 256)
         messageCell.subjectLabel?.text = message?.subject
         messageCell.senderDateLabel?.text = message?.senderDate.dateStringWithFormat("MMM d")
         messageCell.senderLabel?.text = message?.toStringSenders()
@@ -492,16 +492,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         timelineCell.subjectLabel.text = message?.subject
         timelineCell.dateLabel.text = message?.senderDate.dateStringWithFormat("MMM d")
         timelineCell.nameLabel?.text = message?.toStringSenders()
-        
-        if let content = message?.content {
-            var length = countElements(content)
-            if length > 80 {
-                length = 80
-            }
-            timelineCell.contentLabel?.text = content[0..<length]
-        } else {
-            timelineCell.contentLabel?.text = "Content"
-        }
+        timelineCell.contentLabel?.text = message?.shortContent()
     }
     
     
@@ -530,6 +521,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         let message = archived.message;
         archivedCell.subjectLabel?.text = message.subject;
     }
+    
+    
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.sections[section]

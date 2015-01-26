@@ -57,6 +57,18 @@ extension MailboxMessage {
         }
         return toString
     }
+    
+    func shortContent(size: Int = 80) -> String {
+        if let content = self.content {
+            var length = countElements(content)
+            if length > size {
+                length = size
+            }
+            return content[0..<length]
+        } else {
+            return "Content"
+        }
+    }
 }
 
 extension MailboxContact {
