@@ -47,6 +47,7 @@
 		955EAC2F1A73029900BBA19A /* PProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC2E1A73029900BBA19A /* PProject.swift */; };
 		955EAC311A7302AA00BBA19A /* PPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC301A7302AA00BBA19A /* PPerson.swift */; };
 		955EAC331A74604C00BBA19A /* PObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC321A74604C00BBA19A /* PObject.swift */; };
+		955EAC351A76B7C400BBA19A /* MessageDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC341A76B7C400BBA19A /* MessageDetailVC.swift */; };
 		95C197521A6E84AD0060B0AC /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197511A6E84AD0060B0AC /* ImageUtils.swift */; };
 		95C197561A6F18C20060B0AC /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197551A6F18C20060B0AC /* TaskManager.swift */; };
 		95C197591A6F1F350060B0AC /* PCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197581A6F1F350060B0AC /* PCompany.swift */; };
@@ -112,6 +113,7 @@
 		955EAC2E1A73029900BBA19A /* PProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PProject.swift; sourceTree = "<group>"; };
 		955EAC301A7302AA00BBA19A /* PPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPerson.swift; sourceTree = "<group>"; };
 		955EAC321A74604C00BBA19A /* PObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PObject.swift; sourceTree = "<group>"; };
+		955EAC341A76B7C400BBA19A /* MessageDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailVC.swift; sourceTree = "<group>"; };
 		95C197511A6E84AD0060B0AC /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
 		95C197551A6F18C20060B0AC /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		95C197581A6F1F350060B0AC /* PCompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCompany.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				95C1975A1A6F1FEB0060B0AC /* BipoManager.swift */,
 				9504392D1A706F4100AEC999 /* ReportVC.swift */,
 				950439611A716B3500AEC999 /* ArchiveVC.swift */,
+				955EAC341A76B7C400BBA19A /* MessageDetailVC.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				955EAC311A7302AA00BBA19A /* PPerson.swift in Sources */,
 				95C197521A6E84AD0060B0AC /* ImageUtils.swift in Sources */,
 				9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */,
+				955EAC351A76B7C400BBA19A /* MessageDetailVC.swift in Sources */,
 				955EAC2F1A73029900BBA19A /* PProject.swift in Sources */,
 				9531F12B1A6AA142006DFACA /* LoginService.swift in Sources */,
 				954C1E761A618A5D004A6C15 /* ArchiveGroup.swift in Sources */,

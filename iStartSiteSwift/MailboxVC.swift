@@ -24,6 +24,18 @@ enum TableStyle {
 
 class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController, ArchiveVCDelegate {
     
+    struct Constants {
+        struct Seque {
+            static let showMessage = "showMessage"
+        }
+        
+        struct TableViewCell {
+            static let TimelineCell = ""
+            static let MessageCell = ""
+            static let ArchiveCell = ""
+        }
+    }
+    
     private var archives = [[Archive]]()
     private var sections = [String]()
     
@@ -371,9 +383,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    // MARK: - Segues
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         //        if segue.identifier == "showDetail" {
         //            if let indexPath = tableView.indexPathForSelectedRow() {
         //                let object = objects[indexPath.row] as NSDate
@@ -381,6 +391,25 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         //                tableView.deselectRowAtIndexPath(indexPath, animated: true)
         //            }
         //        }
+//    }
+    
+    
+    
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        
+        if segue.identifier == Constants.Seque.showMessage {
+            if let indexPath = tableView.indexPathForSelectedRow() {
+                let archive = archives[indexPath.section][indexPath.row]
+                let messageDetailVC = segue.destinationViewController as MessageDetailVC
+                messageDetailVC.message = archive.message
+                
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+
+            }
+        }
+        
+        
     }
     
     // MARK: - Table View
@@ -603,6 +632,9 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             
         })
     }
+    
+    
+
 }
 
 class MessageCell: SBGestureTableViewCell {
