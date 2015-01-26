@@ -128,7 +128,7 @@ class MailboxManager {
                         }
                         
                         //archive message
-                        self.archiveIncomingMessage(message!, inContext: localContext)
+//                        self.archiveIncomingMessage(message!, inContext: localContext)
                     }
                     
                 }
@@ -137,10 +137,11 @@ class MailboxManager {
                 
                 }, completion: { success, error in
                     
-                    if --self.runningTasks == 0 {
-                        complete()
+                    self.fetchMessagesContentInFolder(folderName) {
+                        if --self.runningTasks == 0 {
+                            complete()
+                        }
                     }
-                    
             })
             
         }
@@ -210,6 +211,77 @@ class MailboxManager {
         
     }
     
+    var runningOperation = 0
+    
+    func fetchMessagesContentInFolder(folderName: String, complete: () -> ()) {
+        
+        let contextForCurrentThread = NSManagedObjectContext.MR_contextForCurrentThread()
+        
+        if let folder = MailboxFolder.MR_findFirstByAttribute("name", withValue: folderName, inContext: contextForCurrentThread) as? MailboxFolder {
+            
+            
+            for message in folder.messages.allObjects as [MailboxMessage] {
+                
+                let uid = message.uid
+
+                if let content = message.content {
+                    if !content.isEmpty {
+                        println("content exists (uid:\(uid))")
+                        self.archiveIncomingMessage(message, inContext: contextForCurrentThread)
+                        continue
+                    }
+                }
+                
+                println("starting fetching body of the email with uid \(message.uid)")
+                self.runningOperation++
+                
+                var fetchContentOperation = self.imapSession.fetchMessageOperationWithFolder(folderName, uid: message.uid.unsignedIntValue, urgent: true) as MCOIMAPFetchContentOperation
+                
+                
+                fetchContentOperation.start() {
+                    error, data in
+                    
+                    if error != nil {
+                        println("An error occred while fetching the content of the email (ui:\(uid))! error: \(error.localizedDescription)")
+                    }
+                    
+                    let parser = MCOMessageParser(data: data)
+                    let plainTextBody = parser.plainTextBodyRendering()
+                    
+                    MagicalRecord.saveWithBlock({ localContext in
+                        
+                        if let message = MailboxMessage.MR_findFirstByAttribute("uid", withValue: uid, inContext: localContext) as? MailboxMessage {
+                            
+                            message.content = plainTextBody
+                            
+                            self.archiveIncomingMessage(message, inContext: localContext)
+                        }
+                        
+                        
+                        }) {
+                            succcess, error in
+                            
+                            if --self.runningOperation == 0 {
+                                self.runningOperation = -1
+                                complete()
+                            }
+                            
+                    }
+                }
+            }
+
+            contextForCurrentThread.MR_saveToPersistentStoreAndWait()
+            if self.runningOperation == 0 {
+                println("fire completion after saved data")
+                complete()
+            }
+            
+        }
+        
+        
+        
+    }
+    
     
     
     
@@ -235,7 +307,7 @@ class MailboxManager {
                 if contact == nil {
                     
                     //println("Searching bipo contact for sender \(mailboxContact.toString())")
-//                    println("Searching bipo contact for uid \(message.uid)")
+                    //                    println("Searching bipo contact for uid \(message.uid)")
                     if let contactEmail = ContactEmail.MR_findFirstByAttribute("email", withValue: mailboxContact.emailAddress, inContext: localContext) as? ContactEmail {
                         contact = contactEmail.contact
                         mailboxContact.contact = contact!

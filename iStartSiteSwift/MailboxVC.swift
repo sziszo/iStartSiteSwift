@@ -500,7 +500,17 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         timelineCell.subjectLabel.text = message?.subject
         timelineCell.dateLabel.text = message?.senderDate.dateStringWithFormat("MMM d")
         timelineCell.nameLabel?.text = "Test@gmail.com"
-        timelineCell.contentLabel?.text = "Checking out of the hotel today. It was really fun to see everyone and catch up. We should have more conferences like this so we can share ideas."
+//        timelineCell.contentLabel?.text = "Checking out of the hotel today. It was really fun to see everyone and catch up. We should have more conferences like this so we can share ideas."
+        
+        if let content = message?.content {
+            var length = countElements(content)
+            if length > 80 {
+                length = 80
+            }
+            timelineCell.contentLabel?.text = content[0..<length]
+        } else {
+            timelineCell.contentLabel?.text = "Content"
+        }
     }
     
     
