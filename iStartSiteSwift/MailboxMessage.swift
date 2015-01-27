@@ -12,6 +12,7 @@ import CoreData
 @objc(MailboxMessage)
 class MailboxMessage: NSManagedObject {
 
+    @NSManaged var contentHtml: String?
     @NSManaged var content: String?
     @NSManaged var senderDate: NSDate
     @NSManaged var subject: String

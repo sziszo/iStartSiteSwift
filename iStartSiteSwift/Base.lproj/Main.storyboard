@@ -80,6 +80,7 @@
                                     <outlet property="senderDateLabel" destination="pfv-c7-6bO" id="iFa-2F-9uC"/>
                                     <outlet property="senderLabel" destination="OHN-Sl-3D4" id="oOg-nr-ILj"/>
                                     <outlet property="subjectLabel" destination="SPQ-76-Pfo" id="n0Z-pU-po8"/>
+                                    <segue destination="1GN-bM-fmG" kind="show" identifier="showMessageDetail" id="ZvG-ME-FIn"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArchiveCell" rowHeight="80" id="bzn-9D-coe" customClass="ArchivedCell" customModule="iStartSiteSwift" customModuleProvider="target">
@@ -212,7 +213,7 @@
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tsL-JS-cJM">
                                             <rect key="frame" x="52" y="14" width="54" height="54"/>
-                                            <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="54" id="77i-ju-BDR"/>
                                                 <constraint firstAttribute="height" constant="54" id="H96-co-iRL"/>
@@ -267,7 +268,7 @@
                                     <outlet property="profileImageView" destination="tsL-JS-cJM" id="8kz-S7-qLn"/>
                                     <outlet property="subjectLabel" destination="YYb-mv-mDt" id="qKq-zJ-EZn"/>
                                     <outlet property="typeImageView" destination="gzO-Nj-93v" id="Fxe-si-eIk"/>
-                                    <segue destination="1GN-bM-fmG" kind="show" identifier="showMessage" id="zbe-hW-Adz"/>
+                                    <segue destination="1GN-bM-fmG" kind="show" identifier="showTimelineMessageDetail" id="Xk5-6v-biJ"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimelineHeaderCell" rowHeight="25" id="0ma-Fr-4Ro" userLabel="TimelineHeaderCell" customClass="TimelineHeaderCell" customModule="iStartSiteSwift" customModuleProvider="target">
@@ -382,6 +383,7 @@
         <!--Message DetailVC-->
         <scene sceneID="A4k-BU-BnA">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HoE-wC-5wt" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="1GN-bM-fmG" customClass="MessageDetailVC" customModule="iStartSiteSwift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="b3a-H8-V6o"/>
@@ -392,19 +394,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N3n-A2-DjY">
-                                <rect key="frame" x="16" y="86" width="562" height="22"/>
+                                <rect key="frame" x="16" y="74" width="566" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="sender" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLp-3W-V2Y">
-                                <rect key="frame" x="16" y="116" width="501" height="17"/>
+                                <rect key="frame" x="16" y="104" width="505" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxj-jj-AC8">
-                                <rect key="frame" x="551" y="116" width="27" height="16"/>
+                                <rect key="frame" x="555" y="104" width="27" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -413,34 +415,45 @@
                                 </variation>
                             </label>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TwJ-Fm-sdR">
-                                <rect key="frame" x="16" y="141" width="562" height="449"/>
+                                <rect key="frame" x="16" y="140" width="566" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aKx-jB-ocq">
+                                <rect key="frame" x="16" y="129" width="566" height="3"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="3" id="vKd-7X-c96"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="bLp-3W-V2Y" firstAttribute="leading" secondItem="aKx-jB-ocq" secondAttribute="leading" id="3hS-Zz-9N9"/>
                             <constraint firstItem="sxj-jj-AC8" firstAttribute="leading" secondItem="bLp-3W-V2Y" secondAttribute="trailing" constant="34" id="KWD-tw-9Ci"/>
                             <constraint firstItem="N3n-A2-DjY" firstAttribute="leading" secondItem="bLp-3W-V2Y" secondAttribute="leading" id="SIa-1Q-iTW"/>
                             <constraint firstItem="bLp-3W-V2Y" firstAttribute="leading" secondItem="TwJ-Fm-sdR" secondAttribute="leading" id="ZIv-Iv-kLm"/>
                             <constraint firstItem="sxj-jj-AC8" firstAttribute="leading" secondItem="bLp-3W-V2Y" secondAttribute="trailing" constant="34" id="aB8-0S-UbM"/>
                             <constraint firstItem="sxj-jj-AC8" firstAttribute="trailing" secondItem="TwJ-Fm-sdR" secondAttribute="trailing" id="cvZ-3Y-chS"/>
+                            <constraint firstItem="sxj-jj-AC8" firstAttribute="trailing" secondItem="aKx-jB-ocq" secondAttribute="trailing" id="eIo-y4-ZlC"/>
                             <constraint firstItem="sxj-jj-AC8" firstAttribute="top" secondItem="N3n-A2-DjY" secondAttribute="bottom" constant="8" id="fC5-sP-rF5"/>
                             <constraint firstItem="N3n-A2-DjY" firstAttribute="trailing" secondItem="sxj-jj-AC8" secondAttribute="trailing" id="fu6-bR-QcO"/>
-                            <constraint firstItem="N3n-A2-DjY" firstAttribute="top" secondItem="b3a-H8-V6o" secondAttribute="bottom" constant="22" id="h58-sH-N9p"/>
+                            <constraint firstItem="N3n-A2-DjY" firstAttribute="top" secondItem="b3a-H8-V6o" secondAttribute="bottom" constant="10" id="h58-sH-N9p"/>
+                            <constraint firstItem="aKx-jB-ocq" firstAttribute="top" secondItem="bLp-3W-V2Y" secondAttribute="bottom" constant="8" id="kA4-t7-RUq"/>
                             <constraint firstItem="sxj-jj-AC8" firstAttribute="trailing" secondItem="Dki-D6-oaR" secondAttribute="trailingMargin" constant="6" id="ku7-Zf-0Zi"/>
-                            <constraint firstItem="TwJ-Fm-sdR" firstAttribute="top" secondItem="bLp-3W-V2Y" secondAttribute="bottom" constant="8" id="lgP-HR-PRY"/>
                             <constraint firstItem="bLp-3W-V2Y" firstAttribute="leading" secondItem="Dki-D6-oaR" secondAttribute="leadingMargin" id="lx4-cC-Mxh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="N3n-A2-DjY" secondAttribute="trailing" constant="6" id="mh9-N4-8sT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="N3n-A2-DjY" secondAttribute="trailing" constant="2" id="mh9-N4-8sT"/>
                             <constraint firstItem="sxj-jj-AC8" firstAttribute="top" secondItem="N3n-A2-DjY" secondAttribute="bottom" constant="8" id="oPz-vl-Pdz"/>
                             <constraint firstItem="bLp-3W-V2Y" firstAttribute="top" secondItem="N3n-A2-DjY" secondAttribute="bottom" constant="8" id="oYv-zN-Mbv"/>
                             <constraint firstItem="N3n-A2-DjY" firstAttribute="leading" secondItem="Dki-D6-oaR" secondAttribute="leadingMargin" id="ohG-sQ-fri"/>
                             <constraint firstItem="CRt-bh-mAM" firstAttribute="top" secondItem="TwJ-Fm-sdR" secondAttribute="bottom" constant="10" id="rhN-ba-xy8"/>
+                            <constraint firstItem="TwJ-Fm-sdR" firstAttribute="top" secondItem="aKx-jB-ocq" secondAttribute="bottom" constant="8" id="xZF-pO-dax"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="lx4-cC-Mxh"/>
                                 <exclude reference="aB8-0S-UbM"/>
                                 <exclude reference="ku7-Zf-0Zi"/>
+                                <exclude reference="oPz-vl-Pdz"/>
                             </mask>
                         </variation>
                     </view>
@@ -452,7 +465,6 @@
                         <outlet property="subjectLable" destination="N3n-A2-DjY" id="DPv-Zd-GOG"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HoE-wC-5wt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1966" y="-771"/>
         </scene>
@@ -819,4 +831,7 @@
     <resources>
         <image name="person" width="35" height="35"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Xk5-6v-biJ"/>
+    </inferredMetricsTieBreakers>
 </document>

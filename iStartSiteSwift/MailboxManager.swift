@@ -247,13 +247,14 @@ class MailboxManager {
                     
                     let parser = MCOMessageParser(data: data)
                     let plainTextBody = parser.plainTextBodyRendering()
+                    let htmlBody = parser.htmlBodyRendering()
                     
                     MagicalRecord.saveWithBlock({ localContext in
                         
                         if let message = MailboxMessage.MR_findFirstByAttribute("uid", withValue: uid, inContext: localContext) as? MailboxMessage {
                             
                             message.content = plainTextBody
-                            
+                            message.contentHtml = htmlBody
                             self.archiveIncomingMessage(message, inContext: localContext)
                         }
                         

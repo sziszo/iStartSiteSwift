@@ -11,7 +11,7 @@ import Foundation
 
 class ImageUtils {
     
-    class func imageFromText(text: String, withFontSize fontSize: CGFloat = 64.0, backgroundColor: UIColor = UIColor.brownColor(), foregroundColor: UIColor = UIColor.orangeColor()) -> UIImage {
+    class func imageFromText(text: String, withFontSize fontSize: CGFloat = 64.0, backgroundColor: UIColor = UIColor.blueColor(), foregroundColor: UIColor = UIColor.orangeColor()) -> UIImage {
         
         let font = UIFont.systemFontOfSize(fontSize)
         let nsText = NSString(string: text)

@@ -26,7 +26,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     struct Constants {
         struct Seque {
-            static let showMessage = "showMessage"
+            static let showMessageDetail = "showMessageDetail"
+            static let showTimelineMessageDetail = "showTimelineMessageDetail"
         }
         
         struct TableViewCell {
@@ -398,7 +399,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
-        if segue.identifier == Constants.Seque.showMessage {
+        if segue.identifier == Constants.Seque.showMessageDetail || segue.identifier == Constants.Seque.showTimelineMessageDetail {
             if let indexPath = tableView.indexPathForSelectedRow() {
                 let archive = archives[indexPath.section][indexPath.row]
                 let messageDetailVC = segue.destinationViewController as MessageDetailVC
@@ -408,6 +409,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
 
             }
         }
+
         
         
     }
@@ -499,7 +501,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         messageCell.contentLabel?.text = message?.shortContent(size: 256)
         messageCell.subjectLabel?.text = message?.subject
-        messageCell.senderDateLabel?.text = message?.senderDate.dateStringWithFormat("MMM d")
+        messageCell.senderDateLabel?.text = message?.senderDate.dateStringWithFormat("MMM d HH:mm")
         messageCell.senderLabel?.text = message?.toStringSenders()
     }
     
@@ -519,9 +521,14 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         }
         
         timelineCell.subjectLabel.text = message?.subject
-        timelineCell.dateLabel.text = message?.senderDate.dateStringWithFormat("MMM d")
+        timelineCell.dateLabel.text = message?.senderDate.dateStringWithFormat("MMM d HH:mm")
         timelineCell.nameLabel?.text = message?.toStringSenders()
-        timelineCell.contentLabel?.text = message?.shortContent()
+        
+        if UIDevice.currentDevice().orientation.isLandscape {
+            timelineCell.contentLabel?.text = message?.shortContent(size: 256)
+        } else {
+            timelineCell.contentLabel?.text = message?.shortContent()
+        }
     }
     
     
@@ -545,7 +552,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         archivedCell.companyLabel?.text = getFormattedCompany()
         archivedCell.personLabel?.text = getFormattedPerson()
         archivedCell.orderNrLabel?.text = getFormattedOrder()
-        archivedCell.archivedAtLabel?.text = archived.archivedAt.dateStringWithFormat("MMM d")
+        archivedCell.archivedAtLabel?.text = archived.archivedAt.dateStringWithFormat("MMM d HH:mm")
         
         let message = archived.message;
         archivedCell.subjectLabel?.text = message.subject;
@@ -594,6 +601,15 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         return 25.0
     }
     
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            println("landscape")
+        } else {
+            println("portraight")
+        }
+        self.tableView.reloadData()
+    }
 
     // MARK: MenuVIewController
     

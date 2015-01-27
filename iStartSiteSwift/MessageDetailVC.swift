@@ -42,7 +42,15 @@ class MessageDetailVC: UIViewController {
         subjectLable.text = message.subject
         senderLabel.text = message.toStringSenders()
         sentDateLabel.text = message.senderDate.dateStringWithFormat("MMM d")
-        contentView.loadHTMLString(message.content, baseURL: nil)
+        contentView.loadHTMLString(message.contentHtml, baseURL: nil)
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            println("landscape")
+        } else {
+            println("portraight")
+        }
     }
 
     override func didReceiveMemoryWarning() {

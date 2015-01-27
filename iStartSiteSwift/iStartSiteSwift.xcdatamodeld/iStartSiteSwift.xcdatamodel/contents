@@ -78,6 +78,7 @@
     </entity>
     <entity name="MailboxMessage" representedClassName="MailboxMessage" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contentHtml" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
@@ -136,7 +137,7 @@
         <element name="Mailbox" positionX="1881" positionY="135" width="128" height="163"/>
         <element name="MailboxContact" positionX="1564" positionY="594" width="128" height="118"/>
         <element name="MailboxFolder" positionX="1663" positionY="162" width="128" height="88"/>
-        <element name="MailboxMessage" positionX="1557" positionY="324" width="128" height="163"/>
+        <element name="MailboxMessage" positionX="1557" positionY="324" width="128" height="180"/>
         <element name="Person" positionX="2014" positionY="1136" width="128" height="133"/>
         <element name="Project" positionX="1800" positionY="576" width="128" height="238"/>
         <element name="User" positionX="1609" positionY="1157" width="128" height="148"/>
