@@ -109,7 +109,18 @@ class ArchiveVC: UITableViewController {
         
         let item = items[indexPath.row]
         println("item-label: \(item.label), item-value: \(item.value)")
-        cell.textLabel?.text = item.label
+        
+        //letterpress label
+        let font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+        let textColor = UIColor(red: 0.175, green: 0.458, blue: 0.831, alpha: 1)
+        let attributes = [
+            NSForegroundColorAttributeName : textColor,
+            NSFontAttributeName : font,
+            NSTextEffectAttributeName : NSTextEffectLetterpressStyle
+        ]
+        let letterpressItemLable = NSAttributedString(string: item.label, attributes: attributes)
+        
+        cell.textLabel?.attributedText = letterpressItemLable
         cell.detailTextLabel?.text = item.value
         
         if !item.valid {

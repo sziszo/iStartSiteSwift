@@ -51,8 +51,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     let closeIcon = FAKIonIcons.iosCloseIconWithSize(30)
     let composeIcon = FAKIonIcons.iosComposeIconWithSize(30)
     let clockIcon = FAKIonIcons.iosClockIconWithSize(30)
-    let greenColor = UIColor(red: 85.0/255, green: 213.0/255, blue: 80.0/255, alpha: 1)
-    let redColor = UIColor(red: 213.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
+    let greenColor = Appearance.TableCell.actionColorGreen //UIColor(red: 85.0/255, green: 213.0/255, blue: 80.0/255, alpha: 1)
+    let redColor = Appearance.TableCell.actionColorRed //UIColor(red: 213.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
     let yellowColor = UIColor(red: 236.0/255, green: 223.0/255, blue: 60.0/255, alpha: 1)
     let brownColor = UIColor(red: 182.0/255, green: 127.0/255, blue: 78.0/255, alpha: 1)
     
@@ -741,6 +741,7 @@ class TimelineCell2 : SBGestureTableViewCell {
         dateImageView.image = clockIcon.imageWithSize(size2)
         
         profileImageView.layer.cornerRadius = 27
+        profileImageView.backgroundColor = Appearance.ProfileImage.backgroundColor
         
         nameLabel?.font = UIFont(name: "Avenir-Book", size: 16)
         nameLabel?.textColor = UIColor.blackColor()

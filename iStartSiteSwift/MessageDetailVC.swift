@@ -28,12 +28,12 @@ class MessageDetailVC: UIViewController, ArchiveVCDelegate {
     var delegate: MessageDetailVCDelegate?
     
 //    let defaultBackgroundColor = MP_HEX_RGB("E0F8D8")
-    let defaultBackgroundColor = UIColor.whiteColor()
+//    let defaultBackgroundColor = UIColor.whiteColor()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = defaultBackgroundColor
+        self.view.backgroundColor = Appearance.MessageView.backgroundColor
 
         // Do any additional setup after loading the view.
         

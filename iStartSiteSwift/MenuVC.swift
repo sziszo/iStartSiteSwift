@@ -26,18 +26,18 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     @IBOutlet weak var txtLoggedInUser: UILabel!
     @IBOutlet weak var loginView: UIView!
     
-    let defaultBackgroundColor = MP_HEX_RGB("D1EEFC")
+//    let defaultBackgroundColor = MP_HEX_RGB("D1EEFC")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = defaultBackgroundColor
-        self.tableView.backgroundColor = defaultBackgroundColor
+        self.view.backgroundColor = Appearance.Menu.tableViewBackground
+        self.tableView.backgroundColor = Appearance.Menu.tableViewBackground
         
         println("menues: \(menus)")
         
-        let navColor = UIColor(red: 0.175, green: 0.458, blue: 0.831, alpha: 1.0)
-        loginView.backgroundColor = navColor
+//        let navColor = UIColor(red: 0.175, green: 0.458, blue: 0.831, alpha: 1.0)
+        loginView.backgroundColor = Appearance.Menu.loginViewBackground
         
         tableView.reloadData()
         
@@ -81,7 +81,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
             cell.imageView?.image = closeIcon.imageWithSize(size)
         }
         
-        cell.backgroundColor = defaultBackgroundColor
+        cell.backgroundColor = Appearance.Menu.backgroundColor
         return cell
     }
     

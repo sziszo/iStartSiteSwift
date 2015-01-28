@@ -213,7 +213,7 @@
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tsL-JS-cJM">
                                             <rect key="frame" x="52" y="14" width="54" height="54"/>
-                                            <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.21695553200000001" green="0.74475032220000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="54" id="77i-ju-BDR"/>
                                                 <constraint firstAttribute="height" constant="54" id="H96-co-iRL"/>
@@ -379,7 +379,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YOe-GM-3BU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1038" y="-771"/>
+            <point key="canvasLocation" x="1161" y="-771"/>
         </scene>
         <!--Message DetailVC-->
         <scene sceneID="A4k-BU-BnA">
@@ -815,7 +815,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1957" y="-31"/>
+            <point key="canvasLocation" x="1966" y="-31"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="e1W-j1-pAQ">
