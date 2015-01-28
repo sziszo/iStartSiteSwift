@@ -176,6 +176,19 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		953C37BB1A79AC020094EE0C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9531F12A1A6AA142006DFACA /* LoginService.swift */,
+				9531F12C1A6B4B94006DFACA /* Settings.swift */,
+				95C197551A6F18C20060B0AC /* TaskManager.swift */,
+				955EAC381A779B4B00BBA19A /* HistoryManager.swift */,
+				95C1975A1A6F1FEB0060B0AC /* BipoManager.swift */,
+				950403071A65E84F00F0B062 /* MailboxManager.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		954C1E031A616226004A6C15 = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +214,7 @@
 			children = (
 				954C1E111A616226004A6C15 /* AppDelegate.swift */,
 				954C1E9C1A618DD6004A6C15 /* Control */,
+				953C37BB1A79AC020094EE0C /* Services */,
 				954C1E651A61894F004A6C15 /* Model */,
 				954C1E661A618957004A6C15 /* View */,
 				9504030B1A687E7F00F0B062 /* Utils */,
@@ -292,17 +306,11 @@
 				950403051A64A28D00F0B062 /* Categories.swift */,
 				954C1E131A616226004A6C15 /* SlideMenuVC.swift */,
 				954C1EA81A61BC89004A6C15 /* MailboxVC.swift */,
-				950403071A65E84F00F0B062 /* MailboxManager.swift */,
 				9531F1201A6889BE006DFACA /* MenuVC.swift */,
 				9531F1241A69E5E9006DFACA /* LoginVC.swift */,
-				9531F12A1A6AA142006DFACA /* LoginService.swift */,
-				9531F12C1A6B4B94006DFACA /* Settings.swift */,
-				95C197551A6F18C20060B0AC /* TaskManager.swift */,
-				95C1975A1A6F1FEB0060B0AC /* BipoManager.swift */,
 				9504392D1A706F4100AEC999 /* ReportVC.swift */,
 				950439611A716B3500AEC999 /* ArchiveVC.swift */,
 				955EAC341A76B7C400BBA19A /* MessageDetailVC.swift */,
-				955EAC381A779B4B00BBA19A /* HistoryManager.swift */,
 				955EAC3A1A77F75D00BBA19A /* ZoomPresentAnimationController.swift */,
 				955EAC3C1A77F9F500BBA19A /* ZoomDismissAnimationController.swift */,
 				953C37811A7852C50094EE0C /* NavigationControlDelegate.swift */,
