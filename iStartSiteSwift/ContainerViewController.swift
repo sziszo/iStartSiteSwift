@@ -26,7 +26,7 @@ protocol CenterViewController {
     var delegate: CenterViewControllerDelegate? { get set }
 }
 
-class ContainerViewController: UIViewController, CenterViewControllerDelegate, UIGestureRecognizerDelegate {
+class ContainerViewController: UIViewController, CenterViewControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     
     var centerViewController: MailboxVC!
@@ -44,6 +44,10 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
     
     let centerPanelExpandedOffset: CGFloat = 140
     
+    let zoomPresentAnimationController = ZoomPresentAnimationController()
+    let zoomDismissAnimationController = ZoomDismissAnimationController()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,8 +62,22 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
         
         centerNavigationController.didMoveToParentViewController(self)
         
+        centerNavigationController.delegate = self
+        
 //        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
 //        centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    
+    // MARK: - UINavigationControllerDelegate
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        if operation == UINavigationControllerOperation.Push {
+            return zoomPresentAnimationController
+        }
+        
+        return zoomDismissAnimationController
+        
     }
     
     // MARK: CenterViewController delegate methods

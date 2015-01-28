@@ -20,8 +20,10 @@ class ImageUtils {
 //        println("imagesize: \(size)")
         
         UIGraphicsBeginImageContext(size)
+        
         nsText.drawAtPoint(CGPointMake(0.0, 0.0), withAttributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: foregroundColor,
             NSBackgroundColorAttributeName: backgroundColor])
+        
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         

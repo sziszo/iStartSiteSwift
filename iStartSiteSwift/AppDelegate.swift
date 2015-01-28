@@ -24,6 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupParse()
         
+        let navColor = UIColor(red: 0.175, green: 0.458, blue: 0.831, alpha: 1.0)
+        UINavigationBar.appearance().barTintColor = navColor
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        
 //        setupTestData()
 //        BipoTestDataManager.uploadTestData()
         

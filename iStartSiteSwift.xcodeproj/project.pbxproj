@@ -18,6 +18,8 @@
 		9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F1241A69E5E9006DFACA /* LoginVC.swift */; };
 		9531F12B1A6AA142006DFACA /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F12A1A6AA142006DFACA /* LoginService.swift */; };
 		9531F12D1A6B4B94006DFACA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F12C1A6B4B94006DFACA /* Settings.swift */; };
+		953C37821A7852C50094EE0C /* NavigationControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C37811A7852C50094EE0C /* NavigationControlDelegate.swift */; };
+		953C37841A7909D40094EE0C /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C37831A7909D40094EE0C /* Appearance.swift */; };
 		954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E111A616226004A6C15 /* AppDelegate.swift */; };
 		954C1E141A616226004A6C15 /* SlideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954C1E131A616226004A6C15 /* SlideMenuVC.swift */; };
 		954C1E171A616226004A6C15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954C1E151A616226004A6C15 /* Main.storyboard */; };
@@ -48,6 +50,9 @@
 		955EAC311A7302AA00BBA19A /* PPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC301A7302AA00BBA19A /* PPerson.swift */; };
 		955EAC331A74604C00BBA19A /* PObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC321A74604C00BBA19A /* PObject.swift */; };
 		955EAC351A76B7C400BBA19A /* MessageDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC341A76B7C400BBA19A /* MessageDetailVC.swift */; };
+		955EAC391A779B4C00BBA19A /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC381A779B4B00BBA19A /* HistoryManager.swift */; };
+		955EAC3B1A77F75D00BBA19A /* ZoomPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC3A1A77F75D00BBA19A /* ZoomPresentAnimationController.swift */; };
+		955EAC3D1A77F9F500BBA19A /* ZoomDismissAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955EAC3C1A77F9F500BBA19A /* ZoomDismissAnimationController.swift */; };
 		95C197521A6E84AD0060B0AC /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197511A6E84AD0060B0AC /* ImageUtils.swift */; };
 		95C197561A6F18C20060B0AC /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197551A6F18C20060B0AC /* TaskManager.swift */; };
 		95C197591A6F1F350060B0AC /* PCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C197581A6F1F350060B0AC /* PCompany.swift */; };
@@ -79,6 +84,8 @@
 		9531F1241A69E5E9006DFACA /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		9531F12A1A6AA142006DFACA /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		9531F12C1A6B4B94006DFACA /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		953C37811A7852C50094EE0C /* NavigationControlDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControlDelegate.swift; sourceTree = "<group>"; };
+		953C37831A7909D40094EE0C /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		954C1E0C1A616226004A6C15 /* iStartSiteSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iStartSiteSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		954C1E101A616226004A6C15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		954C1E111A616226004A6C15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +121,9 @@
 		955EAC301A7302AA00BBA19A /* PPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPerson.swift; sourceTree = "<group>"; };
 		955EAC321A74604C00BBA19A /* PObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PObject.swift; sourceTree = "<group>"; };
 		955EAC341A76B7C400BBA19A /* MessageDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailVC.swift; sourceTree = "<group>"; };
+		955EAC381A779B4B00BBA19A /* HistoryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
+		955EAC3A1A77F75D00BBA19A /* ZoomPresentAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomPresentAnimationController.swift; sourceTree = "<group>"; };
+		955EAC3C1A77F9F500BBA19A /* ZoomDismissAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomDismissAnimationController.swift; sourceTree = "<group>"; };
 		95C197511A6E84AD0060B0AC /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
 		95C197551A6F18C20060B0AC /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		95C197581A6F1F350060B0AC /* PCompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCompany.swift; sourceTree = "<group>"; };
@@ -239,6 +249,7 @@
 		954C1E661A618957004A6C15 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				953C37831A7909D40094EE0C /* Appearance.swift */,
 				954C1E9D1A618EC0004A6C15 /* SBGestureTableView */,
 				954C1E151A616226004A6C15 /* Main.storyboard */,
 				954C1E1A1A616226004A6C15 /* LaunchScreen.xib */,
@@ -291,6 +302,10 @@
 				9504392D1A706F4100AEC999 /* ReportVC.swift */,
 				950439611A716B3500AEC999 /* ArchiveVC.swift */,
 				955EAC341A76B7C400BBA19A /* MessageDetailVC.swift */,
+				955EAC381A779B4B00BBA19A /* HistoryManager.swift */,
+				955EAC3A1A77F75D00BBA19A /* ZoomPresentAnimationController.swift */,
+				955EAC3C1A77F9F500BBA19A /* ZoomDismissAnimationController.swift */,
+				953C37811A7852C50094EE0C /* NavigationControlDelegate.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -454,6 +469,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				955EAC3D1A77F9F500BBA19A /* ZoomDismissAnimationController.swift in Sources */,
 				954C1E641A617129004A6C15 /* iStartSiteSwift.xcdatamodeld in Sources */,
 				9531F1211A6889BE006DFACA /* MenuVC.swift in Sources */,
 				954C1EA41A618EC0004A6C15 /* SBGestureTableViewCellAction.swift in Sources */,
@@ -472,6 +488,7 @@
 				950439621A716B3500AEC999 /* ArchiveVC.swift in Sources */,
 				954C1E721A618A5C004A6C15 /* Contact.swift in Sources */,
 				954C1EA21A618EC0004A6C15 /* SBGestureTableView.swift in Sources */,
+				955EAC391A779B4C00BBA19A /* HistoryManager.swift in Sources */,
 				954C1E801A618A5D004A6C15 /* Company.swift in Sources */,
 				954C1E821A618A5D004A6C15 /* Employee.swift in Sources */,
 				95C197591A6F1F350060B0AC /* PCompany.swift in Sources */,
@@ -488,11 +505,14 @@
 				955EAC311A7302AA00BBA19A /* PPerson.swift in Sources */,
 				95C197521A6E84AD0060B0AC /* ImageUtils.swift in Sources */,
 				9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */,
+				953C37821A7852C50094EE0C /* NavigationControlDelegate.swift in Sources */,
 				955EAC351A76B7C400BBA19A /* MessageDetailVC.swift in Sources */,
 				955EAC2F1A73029900BBA19A /* PProject.swift in Sources */,
 				9531F12B1A6AA142006DFACA /* LoginService.swift in Sources */,
+				955EAC3B1A77F75D00BBA19A /* ZoomPresentAnimationController.swift in Sources */,
 				954C1E761A618A5D004A6C15 /* ArchiveGroup.swift in Sources */,
 				954C1E7C1A618A5D004A6C15 /* Archive.swift in Sources */,
+				953C37841A7909D40094EE0C /* Appearance.swift in Sources */,
 				954C1EA91A61BC89004A6C15 /* MailboxVC.swift in Sources */,
 				954C1E6E1A6189D1004A6C15 /* MailboxContact.swift in Sources */,
 			);

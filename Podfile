@@ -6,3 +6,4 @@ pod 'FontAwesomeKit', '~> 2.2.0'
 pod 'Parse'
 
 pod 'MZFormSheetController', '~> 2.4.1'
+pod 'MPColorTools', '~> 1.6.1'

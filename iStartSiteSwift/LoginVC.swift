@@ -15,6 +15,8 @@ class LoginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor  = MP_HEX_RGB("E0F8D8")
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {

@@ -22,7 +22,8 @@ enum TableStyle {
 }
 
 
-class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController, ArchiveVCDelegate {
+
+class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController, ArchiveVCDelegate, MessageDetailVCDelegate {
     
     struct Constants {
         struct Seque {
@@ -61,9 +62,11 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     var delegate: CenterViewControllerDelegate?
     
-    private var lastSelectedCompany: Company?
-    private var lastSelectedEmployee: Employee?
-    private var lastSelectedOrder: Project?
+    var zoomPresentAnimationController: ZoomPresentAnimationController!
+    var zoomDismissAnimationController: ZoomDismissAnimationController!
+    
+    var selectedIndexPath: NSIndexPath?
+    var removeSelectedCellWhenViewWillAppear = false
 
     
     override func awakeFromNib() {
@@ -73,14 +76,17 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        zoomPresentAnimationController = ZoomPresentAnimationController()
+        zoomDismissAnimationController = ZoomDismissAnimationController()
+        
         self.tableView.estimatedRowHeight = 100.0;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-
+        self.tableView.backgroundColor = UIColor(red: 209, green: 238, blue: 252, alpha: 1)
         
         sbgTableView = self.tableView as SBGestureTableView;
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "insertNewObject:")
         navigationItem.rightBarButtonItem = addButton
         
         let size = CGSizeMake(30, 30)
@@ -145,6 +151,17 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         initRefreshControl()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        if self.removeSelectedCellWhenViewWillAppear {
+            if let indexPath = self.selectedIndexPath {
+                let cell = sbgTableView.cellForRowAtIndexPath(indexPath) as SBGestureTableViewCell
+                self.removeTableView(self.sbgTableView, cell:cell, atIndexPath:  indexPath)
+            }
+            self.removeSelectedCellWhenViewWillAppear = false
+        }
+        println("viewDidAppear")
+    }
+    
     private func removeTableView(tableView: SBGestureTableView, cell: SBGestureTableViewCell, atIndexPath indexPath: NSIndexPath) {
         
         self.removeItemAtIndexPath(indexPath)
@@ -172,12 +189,12 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("archiveNavVC") as UINavigationController;
         if let archiveVC = vc.topViewController as? ArchiveVC {
             if archiveItem.company == nil {
-                if let company = self.lastSelectedCompany {
+                if let company = HistoryManager.defaultManager.lastSelectedCompany {
                     archiveItem.company = company
                 }
             }
             if archiveItem.employee == nil {
-                if let employee = self.lastSelectedEmployee {
+                if let employee = HistoryManager.defaultManager.lastSelectedEmployee {
                     archiveItem.employee = employee
                 }
             }
@@ -404,14 +421,26 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
                 let archive = archives[indexPath.section][indexPath.row]
                 let messageDetailVC = segue.destinationViewController as MessageDetailVC
                 messageDetailVC.message = archive.message
+                messageDetailVC.delegate = self
+                messageDetailVC.title = "Message"
+
                 
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//                tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
             }
         }
 
         
         
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let point = touch.locationInView(self.view)
+    }
+    
+    // MARK: Unwind
+    @IBAction func returnToMailbox(segue: UIStoryboardSegue?) {
     }
     
     // MARK: - Table View
@@ -505,6 +534,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         messageCell.senderLabel?.text = message?.toStringSenders()
     }
     
+    
     private func configureTimelineCell(cell: SBGestureTableViewCell, withMessage message: MailboxMessage?) {
         
         let timelineCell = cell as TimelineCell2
@@ -529,6 +559,9 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         } else {
             timelineCell.contentLabel?.text = message?.shortContent()
         }
+        
+        timelineCell.backgroundColor = Appearance.TableCell.backgroundColor
+        
     }
     
     
@@ -573,7 +606,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             identifier = "MessageHeaderCell"
         }
         let  headerCell = tableView.dequeueReusableCellWithIdentifier(identifier) as TimelineHeaderCell
-        headerCell.backgroundColor = UIColor.whiteColor()
+        headerCell.backgroundColor = Appearance.TableHeader.backgroundColor
         headerCell.headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)?
         return headerCell
     }
@@ -589,7 +622,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         }
         
         let  footerView = tableView.dequeueReusableCellWithIdentifier(identifier) as UITableViewCell
-        footerView.backgroundColor = UIColor.whiteColor()
+        footerView.backgroundColor = Appearance.TableFooter.backgroundColor
         return footerView
     }
     
@@ -599,6 +632,10 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25.0
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        selectedIndexPath = indexPath
     }
     
     
@@ -631,8 +668,8 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     func archivingDidAccepted(archive: Archive) {
         
-        self.lastSelectedCompany = archive.company
-        self.lastSelectedEmployee = archive.employee
+        HistoryManager.defaultManager.lastSelectedCompany = archive.company
+        HistoryManager.defaultManager.lastSelectedEmployee = archive.employee
                 
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
@@ -649,7 +686,18 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         })
     }
     
+    // MARK: - MessageDetailVCDelegate
     
+    func archiveStatusChanged(archive: Archive) {
+        self.removeSelectedCellWhenViewWillAppear = true
+            
+//        fetchArchives()
+//        self.performSegueWithIdentifier(Constants.Seque.showTimelineMessageDetail, sender: tableView)
+        
+//        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("MessageDetailVC") as MessageDetailVC;
+//        vc.message = self.message
+//        self.navigationController?.pushViewController(vc, animated: true)
+    }
 
 }
 
