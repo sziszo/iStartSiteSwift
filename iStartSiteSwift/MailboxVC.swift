@@ -10,17 +10,15 @@ import Foundation
 
 import UIKit
 
-enum ArchiveStatus: Int  {
-    case NotSet = 0
-    case Archived = 1
-    case Rejected = 2
+
+enum OperationType {
+    case ArchiveMessage(ArchiveStatus)
+    case PerformingTask(TaskStatus)
 }
 
-enum TableStyle {
-    case Simple
-    case Grouped
+enum TaskStatus: Int  {
+    case NotSet = 0, Done, Rejected
 }
-
 
 
 class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, CenterViewController, ArchiveVCDelegate, MessageDetailVCDelegate {
@@ -38,11 +36,50 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    private var archives = [[Archive]]()
-    private var sections = [String]()
     
-    private var currentStatus: ArchiveStatus = .NotSet
-    private var tableStyle: TableStyle = .Simple
+    private enum OperationManager {
+        case ArchiveManager(ArchiveMessageManager)
+//        case TaskOperationManager()
+    }
+    
+    private var operationManager: OperationManager = .ArchiveManager(ArchiveMessageManager())
+    private var operationType: OperationType = .ArchiveMessage(.NotSet) {
+        willSet(newOperationType) {
+            
+            switch newOperationType {
+            case .ArchiveMessage(let newStatus):
+                switch self.operationType {
+                case .ArchiveMessage(let oldStatus):
+                    if newStatus == oldStatus {
+                        return
+                    }
+                default:
+                    break
+                }
+            case .PerformingTask(let newStatus):
+                switch self.operationType {
+                case .PerformingTask(let oldStatus):
+                    if newStatus == oldStatus {
+                        return
+                    }
+                default:
+                    break
+                }
+                
+            }
+            
+            switch newOperationType {
+            case .ArchiveMessage(_):
+                operationManager = .ArchiveManager(ArchiveMessageManager())
+            default:
+                break
+            }
+            
+        }
+    }
+    
+    
+//    private var tableStyle: TableStyle = .Grouped
     
     @IBOutlet weak var sbgTableView: SBGestureTableView!
     
@@ -102,16 +139,23 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             let indexPath = tableView.indexPathForCell(cell)
             println("Archive item at \(indexPath)")
             
-            //update ArchiveStatus
-            self.setArchiveStatus(ArchiveStatus.Archived, atIndexPath: indexPath!, withDate: false)
+            switch self.operationManager {
+            case .ArchiveManager(let manager):
+                //update ArchiveStatus
+                manager.setArchiveStatus(ArchiveStatus.Archived, atIndexPath: indexPath!, withDate: false)
+            }
             
+//            let archiveItem = self.archives[indexPath!.section][indexPath!.row]
             
-            let archiveItem = self.archives[indexPath!.section][indexPath!.row]
+            switch self.operationManager {
+            case .ArchiveManager(let manager):
+                
+                let archiveItem = manager.data[indexPath!.section].value[indexPath!.row]
             
-            //remove cell
-            self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
+                self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
+                self.showArchiveVC(archiveItem)
+            }
             
-            self.showArchiveVC(archiveItem)
             
         }
 
@@ -119,10 +163,13 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             
             let indexPath = tableView.indexPathForCell(cell)
             println("Reject item at \(indexPath)")
-
-            //update ArchiveStatus
-            self.setArchiveStatus(ArchiveStatus.Rejected, atIndexPath: indexPath!)
-            NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
+            
+            switch self.operationManager {
+            case .ArchiveManager(let manager):
+                //update ArchiveStatus
+                manager.setArchiveStatus(ArchiveStatus.Rejected, atIndexPath: indexPath!)
+                NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
+            }
 
             //remove cell
             self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
@@ -134,9 +181,13 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             let indexPath = tableView.indexPathForCell(cell)
             println("Set item's status at \(indexPath) to NotSet")
             
-            //update ArchiveStatus
-            self.setArchiveStatus(ArchiveStatus.NotSet, atIndexPath: indexPath!)
-            NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
+            switch self.operationManager {
+            case .ArchiveManager(let manager):
+                //update ArchiveStatus
+                manager.setArchiveStatus(ArchiveStatus.NotSet, atIndexPath: indexPath!)
+                NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait();
+            }
+            
 
             //remove cell
             self.removeTableView(tableView, cell: cell, atIndexPath: indexPath!)
@@ -144,11 +195,22 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         }
 
         
-        fetchArchives()
-        
+        fetchData()
         
         //setup refreshcontrol
         initRefreshControl()
+    }
+    
+    private func fetchData() {
+        
+        //fetch data
+        
+        switch operationManager {
+        case .ArchiveManager(let manager):
+            manager.fetch(operationType) { self.tableView.reloadData() }
+            
+        }
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -164,25 +226,21 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     private func removeTableView(tableView: SBGestureTableView, cell: SBGestureTableViewCell, atIndexPath indexPath: NSIndexPath) {
         
-        self.removeItemAtIndexPath(indexPath)
-        tableView.removeCell(cell, duration: 0.3) {
-            var items = self.archives[indexPath.section]
-            if items.count == 0 {
-                self.archives.removeAtIndex(indexPath.section)
-                self.sections.removeAtIndex(indexPath.section)
+        switch operationManager {
+        case .ArchiveManager(let manager):
+            manager.removeArchiveAtIndexPath(indexPath)
+            
+            tableView.removeCell(cell, duration: 0.3) {
+                
+                if manager.data[indexPath.section].value.count == 0 {
+                    manager.removeKeyAtIndexPath(indexPath)
+                }
+                
+                tableView.reloadData()
+                
             }
-            
-            tableView.reloadData()
-            
         }
-    }
-    
-    private func removeItemAtIndexPath(indexPath: NSIndexPath) {
-        var items = self.archives[indexPath.section]
-        if items.count > 0 {
-            items.removeAtIndex(indexPath.row)
-            self.archives[indexPath.section] = items
-        }
+        
     }
     
     private func showArchiveVC(archiveItem: Archive) {
@@ -214,19 +272,6 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    private func setArchiveStatus(status: ArchiveStatus, atIndexPath indexPath: NSIndexPath, withDate: Bool = true ) {
-        let archive = archives[indexPath.section][indexPath.row]
-        setArchive(archive, status: status, withDate: withDate)
-    }
-    
-    private func setArchive(archive: Archive, status: ArchiveStatus, withDate: Bool ) {
-        
-        archive.archiveStatus = status.rawValue
-        if withDate {
-            archive.archivedAt = NSDate()
-        }
-        
-    }
     
     private func setupIcons() {
         checkIcon.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor())
@@ -248,91 +293,6 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    private func fetchArchives() {
-        let fetchRequest = Archive.MR_createFetchRequest()
-        
-        switch self.currentStatus {
-        case .NotSet:
-            let sortDescriptor = NSSortDescriptor(key: "message.senderDate", ascending: false)
-            fetchRequest.sortDescriptors = [sortDescriptor]
-        default:
-            let sortDescriptor = NSSortDescriptor(key: "archivedAt", ascending: false)
-            fetchRequest.sortDescriptors = [sortDescriptor]
-
-        }
-        
-        let predicate = NSPredicate(format: "archiveStatus == %d", currentStatus.rawValue)
-        fetchRequest.predicate = predicate
-        
-        var archives = Archive.MR_executeFetchRequest(fetchRequest!) as [Archive]
-        
-        refreshArhives(archives, byTableStyle: self.tableStyle)
-        
-        println("loaded archives count: \(archives.count)")
-        
-    }
-    
-        
-    private func refreshArhives(archives: [Archive], byTableStyle tableStyle: TableStyle) {
-        
-        var groupFunction: (Archive) -> String
-        
-        switch tableStyle {
-        case .Grouped:
-            switch self.currentStatus {
-            case .NotSet:
-                groupFunction = { archive in
-                    return archive.message.senderDate.dateStringWithFormat("MMM d")
-                }
-            default:
-                groupFunction = { archive in
-                    return archive.archivedAt.dateStringWithFormat("MMM d")
-                }
-
-                
-            }
-        case .Simple:
-            groupFunction = { archive in
-                return ""
-            }
-        }
-        
-        let groupedArchives = grouppingArchives(archives, groupFunction)
-        self.sections = groupedArchives.sections
-        self.archives = groupedArchives.grouped
-        
-        self.tableView.reloadData()
-    }
-    
-    private func grouppingArchives(archives: [Archive], groupFunction: (Archive) -> String) -> (sections: [String], grouped: [[Archive]]) {
-        var grouped = [[Archive]]()
-        var sections = [String]()
-        
-        for archive in archives {
-            
-            let sent = groupFunction(archive)
-            
-            if( !contains(sections, sent) ) {
-                sections.append(sent)
-            }
-            
-            if let index = find(sections, sent) {
-                
-                var items = [Archive]()
-                if index < grouped.count {
-                    items = grouped[index]
-                } else {
-                    grouped.insert([Archive](), atIndex: index)
-                }
-                items.append(archive)
-                grouped[index] = items
-                
-            }
-        }
-        
-        return (sections, grouped)
-    }
-
     
     // MARK: refreshControl 
     
@@ -351,6 +311,7 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         let mailboxManager = MailboxManager(account: AppDelegate.sharedAppDelegate().getTestAccount())
         
         mailboxManager.fetchMessages() {
+            self.fetchData()
             println("mailbox fetching  is finished")
         }
         
@@ -360,12 +321,15 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         }
 
         Timer.start(3, repeats: false) {
-            self.tableView.reloadData()
             
             self.refreshControl?.endRefreshing()
             
             let lastUpdated = NSDate().dateStringWithFormat("MMM d, h:mm:ss")
             self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refersh! Last updated on \(lastUpdated)")
+            
+            
+            self.tableView.reloadData()
+
             println("end refreshing")
         }
     }
@@ -375,54 +339,23 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: - SegmentControl Actions
-    
-    @IBAction func segmentControlDidChange(sender: UISegmentedControl) {
-        
-        var groupMethod: (Archive) -> String
-        switch sender.selectedSegmentIndex {
-        case 0:
-            self.tableStyle = .Simple
-        case 1:
-            self.tableStyle = .Grouped
-        default:
-            return;
-        }
-        
-        var archives = [Archive]()
-        for items in self.archives {
-            for item in items {
-                archives.append(item)
-            }
-        }
-        
-        refreshArhives(archives, byTableStyle: self.tableStyle)
-        
-    }
-    
-    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //        if segue.identifier == "showDetail" {
-        //            if let indexPath = tableView.indexPathForSelectedRow() {
-        //                let object = objects[indexPath.row] as NSDate
-        //                (segue.destinationViewController as DetailViewController).detailItem = object
-        //                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        //            }
-        //        }
-//    }
-    
-    
     
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
         if segue.identifier == Constants.Seque.showMessageDetail || segue.identifier == Constants.Seque.showTimelineMessageDetail {
             if let indexPath = tableView.indexPathForSelectedRow() {
-                let archive = archives[indexPath.section][indexPath.row]
-                let messageDetailVC = segue.destinationViewController as MessageDetailVC
-                messageDetailVC.message = archive.message
-                messageDetailVC.delegate = self
-                messageDetailVC.title = "Message"
+                
+                switch operationManager {
+                case .ArchiveManager(let manager):
+                
+                    let archive = manager.data[indexPath.section].value[indexPath.row]
+                    let messageDetailVC = segue.destinationViewController as MessageDetailVC
+                    messageDetailVC.message = archive.message
+                    messageDetailVC.delegate = self
+                    messageDetailVC.title = "Message"
+                    
+                }
 
                 
 //                tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -446,24 +379,38 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - Table View
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return archives.count
+        switch operationManager {
+        case .ArchiveManager(let manager):
+            return manager.data.count
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return archives[section].count
+        switch operationManager {
+        case .ArchiveManager(let manager):
+            return manager.data[section].value.count
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cellIdentifier: String
-        switch (currentStatus) {
-        case .Archived:
-            cellIdentifier = "ArchiveCell"
-        case .NotSet:
-            cellIdentifier = "TimelineCell"
-        default:
-            cellIdentifier = "MessageCell"
+        var cellIdentifier = ""
+        
+        
+        switch operationType {
+        case .ArchiveMessage(let archiveStatus):
+            switch archiveStatus {
+            case .Archived:
+                cellIdentifier = "ArchiveCell"
+            case .NotSet:
+                cellIdentifier = "TimelineCell"
+            default:
+                cellIdentifier = "MessageCell"
+            }
+        case .PerformingTask(let taskStatus):
+            break
         }
+        
         
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as SBGestureTableViewCell
         
@@ -476,18 +423,28 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
 
         configureActionsForCell(cell)
         
-        let archive = archives[indexPath.section][indexPath.row]
-        
-        switch (currentStatus) {
-        case .Archived:
-            println("configure archive cell")
-            configureArchivedCell(cell, withArchiveItem: archive)
-        case .Rejected:
-            let message = archive.message
-            configureMessageCell(cell, withMessage: message)
-        case .NotSet:
-            let message = archive.message
-            configureTimelineCell(cell, withMessage: message)
+        switch operationManager {
+        case .ArchiveManager(let manager):
+            
+            let archive = manager.data[indexPath.section].value[indexPath.row]
+            
+            switch operationType {
+            case .ArchiveMessage(let archiveStatus):
+                switch (archiveStatus) {
+                case .Archived:
+                    println("configure archive cell")
+                    configureArchivedCell(cell, withArchiveItem: archive)
+                case .Rejected:
+                    let message = archive.message
+                    configureMessageCell(cell, withMessage: message)
+                case .NotSet:
+                    let message = archive.message
+                    configureTimelineCell(cell, withMessage: message)
+                }
+            default:
+                break
+            }
+            
         }
         
     }
@@ -496,30 +453,37 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
         
         let size = CGSizeMake(30, 30)
         
-        switch (currentStatus) {
-        case .Archived:
+        switch operationType {
+        case .ArchiveMessage(let archiveStatus):
+            switch (archiveStatus) {
+            case .Archived:
+                
+                //reject
+                cell.firstLeftAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.3, didTriggerBlock: rejectBlock)
+                
+                //not set
+                cell.firstRightAction = SBGestureTableViewCellAction(icon: composeIcon.imageWithSize(size), color: brownColor, fraction: 0.3, didTriggerBlock: notSetBlock)
+                
+            case .Rejected:
+                
+                //archive
+                cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkIcon.imageWithSize(size), color: greenColor, fraction: 0.3, didTriggerBlock: archiveBlock)
+                
+                //not set
+                cell.firstRightAction = SBGestureTableViewCellAction(icon: composeIcon.imageWithSize(size), color: brownColor, fraction: 0.3, didTriggerBlock: notSetBlock)
+                
+            case .NotSet:
+                
+                //archive
+                cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkIcon.imageWithSize(size), color: greenColor, fraction: 0.3, didTriggerBlock: archiveBlock)
+                
+                //reject
+                cell.firstRightAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.3, didTriggerBlock: rejectBlock)
+            }
             
-            //reject
-            cell.firstLeftAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.3, didTriggerBlock: rejectBlock)
+        case .PerformingTask(let taskStatus):
+            break
             
-            //not set
-            cell.firstRightAction = SBGestureTableViewCellAction(icon: composeIcon.imageWithSize(size), color: brownColor, fraction: 0.3, didTriggerBlock: notSetBlock)
-            
-        case .Rejected:
-            
-            //archive
-            cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkIcon.imageWithSize(size), color: greenColor, fraction: 0.3, didTriggerBlock: archiveBlock)
-            
-            //not set
-            cell.firstRightAction = SBGestureTableViewCellAction(icon: composeIcon.imageWithSize(size), color: brownColor, fraction: 0.3, didTriggerBlock: notSetBlock)
-            
-        case .NotSet:
-            
-            //archive
-            cell.firstLeftAction = SBGestureTableViewCellAction(icon: checkIcon.imageWithSize(size), color: greenColor, fraction: 0.3, didTriggerBlock: archiveBlock)
-            
-            //reject
-            cell.firstRightAction = SBGestureTableViewCellAction(icon: closeIcon.imageWithSize(size), color: redColor, fraction: 0.3, didTriggerBlock: rejectBlock)
         }
 
     }
@@ -594,17 +558,30 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sections[section]
+        
+        switch operationManager {
+        case .ArchiveManager(let manager):
+            return manager.data.array[section]
+        }
+        
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var identifier = ""
-        switch self.currentStatus {
-        case .NotSet:
-            identifier = "TimelineHeaderCell"
-        default:
-            identifier = "MessageHeaderCell"
+        switch operationType {
+        case .ArchiveMessage(let archiveStatus):
+            
+            switch archiveStatus {
+            case .NotSet:
+                identifier = "TimelineHeaderCell"
+            default:
+                identifier = "MessageHeaderCell"
+            }
+            
+        case .PerformingTask(let taskStatus):
+            break
         }
+        
         let  headerCell = tableView.dequeueReusableCellWithIdentifier(identifier) as TimelineHeaderCell
         headerCell.backgroundColor = Appearance.TableHeader.backgroundColor
         headerCell.headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)?
@@ -614,11 +591,18 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         var identifier = ""
-        switch self.currentStatus {
-        case .NotSet:
-            identifier = "TimelineFooterCell"
-        default:
-            identifier = "MessageFooterCell"
+        switch operationType {
+        case .ArchiveMessage(let archiveStatus):
+            
+            switch archiveStatus {
+            case .NotSet:
+                identifier = "TimelineFooterCell"
+            default:
+                identifier = "MessageFooterCell"
+            }
+            
+        case .PerformingTask(let taskStatus):
+            break
         }
         
         let  footerView = tableView.dequeueReusableCellWithIdentifier(identifier) as UITableViewCell
@@ -650,11 +634,25 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
 
     // MARK: MenuVIewController
     
-    func menuSelected(archiveStatus: ArchiveStatus) {
-        self.currentStatus = archiveStatus
+    func menuSelected(operationType: OperationType) {
+        self.operationType = operationType
         
-        fetchArchives()
-        self.tableView.reloadData()
+        fetchData()
+        
+        var title = ""
+        switch self.operationType {
+        case .ArchiveMessage(let archiveStatus):
+            switch archiveStatus {
+            case .Archived: title = "Archived"
+            case .NotSet: title = "Inbox"
+            case .Rejected: title = "Rejected"
+            }
+        case .PerformingTask(let taskStatus):
+            title = "Tasks"
+        }
+        
+        self.title = title
+
         
         delegate?.collapseSidePanels?()
     }
@@ -679,8 +677,17 @@ class MailboxVC: UITableViewController, UITableViewDataSource, UITableViewDelega
             
             if archive != nil {
 //                NSManagedObjectContext.MR_defaultContext().undo()
-                self.setArchive(archive!, status: self.currentStatus, withDate: false)
-                self.fetchArchives()
+                
+                switch self.operationManager {
+                case .ArchiveManager(let manager):
+                    switch self.operationType {
+                    case .ArchiveMessage(let archiveStatus):
+                        manager.setArchive(archive!, status: archiveStatus, withDate: false)
+                        self.fetchData()
+                    default:
+                        break
+                    }
+                }
             }
             
         })

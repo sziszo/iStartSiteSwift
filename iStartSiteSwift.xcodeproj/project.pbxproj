@@ -13,6 +13,10 @@
 		9504030A1A68788700F0B062 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950403091A68788700F0B062 /* Timer.swift */; };
 		9504392E1A706F4100AEC999 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9504392D1A706F4100AEC999 /* ReportVC.swift */; };
 		950439621A716B3500AEC999 /* ArchiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950439611A716B3500AEC999 /* ArchiveVC.swift */; };
+		952A65E81A86C870002333F8 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952A65E71A86C870002333F8 /* ArchiveManager.swift */; };
+		952A65EA1A88EB91002333F8 /* TimelineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952A65E91A88EB91002333F8 /* TimelineManager.swift */; };
+		952A65F01A89111D002333F8 /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952A65EF1A89111D002333F8 /* OrderedDictionary.swift */; };
+		952A65F21A891720002333F8 /* DictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952A65F11A891720002333F8 /* DictionaryUtils.swift */; };
 		9531F11F1A688900006DFACA /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F11E1A688900006DFACA /* ContainerViewController.swift */; };
 		9531F1211A6889BE006DFACA /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F1201A6889BE006DFACA /* MenuVC.swift */; };
 		9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9531F1241A69E5E9006DFACA /* LoginVC.swift */; };
@@ -79,6 +83,10 @@
 		950403091A68788700F0B062 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		9504392D1A706F4100AEC999 /* ReportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		950439611A716B3500AEC999 /* ArchiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveVC.swift; sourceTree = "<group>"; };
+		952A65E71A86C870002333F8 /* ArchiveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveManager.swift; sourceTree = "<group>"; };
+		952A65E91A88EB91002333F8 /* TimelineManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineManager.swift; sourceTree = "<group>"; };
+		952A65EF1A89111D002333F8 /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
+		952A65F11A891720002333F8 /* DictionaryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryUtils.swift; sourceTree = "<group>"; };
 		9531F11E1A688900006DFACA /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		9531F1201A6889BE006DFACA /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		9531F1241A69E5E9006DFACA /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -172,8 +180,21 @@
 			children = (
 				950403091A68788700F0B062 /* Timer.swift */,
 				95C197511A6E84AD0060B0AC /* ImageUtils.swift */,
+				952A65EF1A89111D002333F8 /* OrderedDictionary.swift */,
+				952A65F11A891720002333F8 /* DictionaryUtils.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		952A65E61A86B443002333F8 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				954C1E621A617129004A6C15 /* iStartSiteSwift.xcdatamodeld */,
+				955EAC2B1A73020E00BBA19A /* parse */,
+				954C1E681A618977004A6C15 /* bipo */,
+				954C1E671A61896E004A6C15 /* mailbox */,
+			);
+			name = Domain;
 			sourceTree = "<group>";
 		};
 		953C37BB1A79AC020094EE0C /* Services */ = {
@@ -185,6 +206,8 @@
 				955EAC381A779B4B00BBA19A /* HistoryManager.swift */,
 				95C1975A1A6F1FEB0060B0AC /* BipoManager.swift */,
 				950403071A65E84F00F0B062 /* MailboxManager.swift */,
+				952A65E71A86C870002333F8 /* ArchiveManager.swift */,
+				952A65E91A88EB91002333F8 /* TimelineManager.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -214,7 +237,6 @@
 			children = (
 				954C1E111A616226004A6C15 /* AppDelegate.swift */,
 				954C1E9C1A618DD6004A6C15 /* Control */,
-				953C37BB1A79AC020094EE0C /* Services */,
 				954C1E651A61894F004A6C15 /* Model */,
 				954C1E661A618957004A6C15 /* View */,
 				9504030B1A687E7F00F0B062 /* Utils */,
@@ -252,10 +274,8 @@
 		954C1E651A61894F004A6C15 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				954C1E621A617129004A6C15 /* iStartSiteSwift.xcdatamodeld */,
-				955EAC2B1A73020E00BBA19A /* parse */,
-				954C1E681A618977004A6C15 /* bipo */,
-				954C1E671A61896E004A6C15 /* mailbox */,
+				953C37BB1A79AC020094EE0C /* Services */,
+				952A65E61A86B443002333F8 /* Domain */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -479,6 +499,7 @@
 			files = (
 				955EAC3D1A77F9F500BBA19A /* ZoomDismissAnimationController.swift in Sources */,
 				954C1E641A617129004A6C15 /* iStartSiteSwift.xcdatamodeld in Sources */,
+				952A65EA1A88EB91002333F8 /* TimelineManager.swift in Sources */,
 				9531F1211A6889BE006DFACA /* MenuVC.swift in Sources */,
 				954C1EA41A618EC0004A6C15 /* SBGestureTableViewCellAction.swift in Sources */,
 				955EAC2D1A73027600BBA19A /* PUser.swift in Sources */,
@@ -510,6 +531,7 @@
 				954C1E7A1A618A5D004A6C15 /* User.swift in Sources */,
 				954C1E121A616226004A6C15 /* AppDelegate.swift in Sources */,
 				95C1975D1A6F25EA0060B0AC /* PEmployee.swift in Sources */,
+				952A65E81A86C870002333F8 /* ArchiveManager.swift in Sources */,
 				955EAC311A7302AA00BBA19A /* PPerson.swift in Sources */,
 				95C197521A6E84AD0060B0AC /* ImageUtils.swift in Sources */,
 				9531F1251A69E5E9006DFACA /* LoginVC.swift in Sources */,
@@ -520,9 +542,11 @@
 				955EAC3B1A77F75D00BBA19A /* ZoomPresentAnimationController.swift in Sources */,
 				954C1E761A618A5D004A6C15 /* ArchiveGroup.swift in Sources */,
 				954C1E7C1A618A5D004A6C15 /* Archive.swift in Sources */,
+				952A65F21A891720002333F8 /* DictionaryUtils.swift in Sources */,
 				953C37841A7909D40094EE0C /* Appearance.swift in Sources */,
 				954C1EA91A61BC89004A6C15 /* MailboxVC.swift in Sources */,
 				954C1E6E1A6189D1004A6C15 /* MailboxContact.swift in Sources */,
+				952A65F01A89111D002333F8 /* OrderedDictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

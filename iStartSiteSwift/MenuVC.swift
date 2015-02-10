@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MenuViewControllerDelegate {
-    func menuSelected(archiveStatus: ArchiveStatus)
+    func menuSelected(operationType: OperationType)
 }
 
 class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
@@ -90,7 +90,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedMenu = menus[indexPath.row]
         println("selected menu is \(selectedMenu)")
-        delegate.menuSelected(ArchiveStatus(rawValue: indexPath.row)!)
+        delegate.menuSelected(OperationType.ArchiveMessage(ArchiveStatus(rawValue: indexPath.row)!))
     }
 
 }
